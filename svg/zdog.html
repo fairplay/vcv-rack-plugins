@@ -1,0 +1,47 @@
+<body />
+<script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
+
+<script>
+
+let COLOR_IN = '#00FF00';
+let COLOR_OUT = '#0000FF';
+let COLOR_PARAM = '#FF0000';
+
+let W = 5.08 * 8
+let H = 128.5
+let Wmm = W + 'mm';
+let Hmm = H + 'mm';
+	
+let draw = SVG().addTo('body').size(Wmm, Hmm)
+draw.rect(Wmm, Hmm).attr({fill: '#e8e5e0'})
+draw.plain('μΛooper').attr({x: '19.32mm', y: '10.16mm'}).font({family: "Ubuntu", size: '4mm', anchor: 'middle', weight: "bold"})
+draw.image('t11s_ru_gray.png').attr({x: '15.26mm', y: '116mm'})
+
+draw.circle('6mm').fill(COLOR_IN).attr({cx: '18mm', cy: '25mm'})
+draw.plain('IN').attr({x: '24mm', y: '27mm'}).font({family: "Ubuntu", size: '4mm'})
+
+draw.circle('6mm').fill(COLOR_PARAM).attr({cx: '6mm', cy: '40mm'})
+draw.plain('REC').attr({x: '12mm', y: '42mm'}).font({family: "Ubuntu", size: '4mm'})
+draw.circle('6mm').fill(COLOR_IN).attr({cx: '33mm', cy: '40mm'})
+
+draw.circle('6mm').fill(COLOR_PARAM).attr({cx: '6mm', cy: '50mm'})
+draw.plain('PLAY').attr({x: '12mm', y: '52mm'}).font({family: "Ubuntu", size: '4mm'})
+draw.circle('6mm').fill(COLOR_IN).attr({cx: '33mm', cy: '50mm'})
+
+draw.circle('6mm').fill(COLOR_PARAM).attr({cx: '6mm', cy: '60mm'})
+draw.plain('LOOP').attr({x: '12mm', y: '62mm'}).font({family: "Ubuntu", size: '4mm'})
+draw.circle('6mm').fill(COLOR_IN).attr({cx: '33mm', cy: '60mm'})
+
+draw.circle('6mm').fill(COLOR_PARAM).attr({cx: '6mm', cy: '70mm'})
+draw.plain('LENGTH').attr({x: '12mm', y: '72mm'}).font({family: "Ubuntu", size: '4mm'})
+draw.circle('6mm').fill(COLOR_IN).attr({cx: '33mm', cy: '70mm'})
+
+draw.circle('6mm').fill(COLOR_PARAM).attr({cx: '6mm', cy: '80mm'})
+draw.plain('SPEED').attr({x: '12mm', y: '82mm'}).font({family: "Ubuntu", size: '4mm'})
+draw.circle('6mm').fill(COLOR_IN).attr({cx: '33mm', cy: '80mm'})
+
+draw.rect('36.48mm', '10mm').attr({fill: '#c1b9ac', x: '1mm', y: '95mm'}).radius('4mm')
+draw.plain('OUT').attr({x: '11mm', y: '102mm'}).font({family: "Ubuntu", size: '4mm'})
+draw.circle('6mm').fill(COLOR_OUT).attr({cx: '25mm', cy: '100mm'})
+
+</script>
