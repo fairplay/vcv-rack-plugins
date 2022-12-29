@@ -27,14 +27,13 @@ struct MicroLooper : Module {
 	const static int MIN_BITS = 6;
 	const static int MAX_BITS = 14;
 	const static int MAX_LENGTH = pow(2, MAX_BITS);
-	const static int MAX_CHUNKS = pow(2, MAX_BITS - MIN_BITS) - 1;
 
 	MicroLooper() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 		configParam(PLAYBTN_PARAM, 0.f, 1.f, 1.f, "");
 		configParam(LENGTHKNOB_PARAM, (float)MIN_BITS, (float)MAX_BITS, (float)MAX_BITS, "Length", " samples", 2.f, 1.f, 0.f);
-		configParam(SCANKNOB_PARAM, 0.f, (float)MAX_CHUNKS, 1.f, "Chunk", "", 0.f, 1.f, 1.f);
-		configParam(SPEEDKNOB_PARAM, -1.f, 1.f, 1.f, "Speed", " samples");		
+		configParam(SCANKNOB_PARAM, 0.f, (float)(MAX_LENGTH - 1), 0.f, "Scan position", "");
+		configParam(SPEEDKNOB_PARAM, -1.f, 1.f, 1.f, "Speed", " samples");
 		configInput(PLAYSOCKET_INPUT, "");
 		configInput(LENGTHSOCKET_INPUT, "");
 		configInput(SCANSOCKET_INPUT, "");
@@ -55,7 +54,7 @@ struct MicroLooper : Module {
 	void process(const ProcessArgs& args) override {
 
 		this->isPlay = params[PLAYBTN_PARAM].getValue() > 0.f;
-		
+
 		float speed;
 		if (inputs[SPEEDSOCKET_INPUT].isConnected()) {
 			speed = inputs[SPEEDSOCKET_INPUT].getVoltage() / 5.f;
@@ -73,42 +72,34 @@ struct MicroLooper : Module {
 		lengthRaw = params[LENGTHKNOB_PARAM].getValue();
 		int length = pow(2, (int)lengthRaw);
 
-		float chunkRaw;
+		float scanPosRaw;
 		if (inputs[SCANSOCKET_INPUT].isConnected()) {
-			chunkRaw = inputs[SCANSOCKET_INPUT].getVoltage() * (float)(MAX_CHUNKS) * 0.1f;
-			chunkRaw = clamp(chunkRaw, 0.f, (float)MAX_CHUNKS);
-			params[SCANKNOB_PARAM].setValue(chunkRaw);
+			scanPosRaw = inputs[SCANSOCKET_INPUT].getVoltage() * (float)(MAX_LENGTH) * 0.1f;
+			scanPosRaw = clamp(scanPosRaw, 0.f, (float)(MAX_LENGTH - 1));
+			params[SCANKNOB_PARAM].setValue(scanPosRaw);
 		}
-		chunkRaw = params[SCANKNOB_PARAM].getValue();
-
-		int chunk = (int)chunkRaw;
-		float chunkFrac = chunkRaw - (float)chunk;
-		chunk = (chunk * length % MAX_LENGTH) / length;
+		int scanPos = (int)params[SCANKNOB_PARAM].getValue();
 
 		if (playTrigger.process(inputs[PLAYSOCKET_INPUT].getVoltage())) {
 			this->isPlay = !this->isPlay;
 			params[PLAYBTN_PARAM].setValue(this->isPlay ? 1.0 : 0.0);
 		}
 
-		float currentSample = 0;
+		float currentSample = 0.f;
+
 		if (this->isPlay) {
 			int pos = (int)this->playPosition;
 			float frac = this->playPosition - (float)pos;
 
-			int realPos = pos + chunk * length;
-			int realPosNext = realPos + length;
-			if (realPosNext >= MAX_LENGTH) realPosNext -= MAX_LENGTH;
+			int realPos = pos + scanPos;
+			if (realPos >= MAX_LENGTH) realPos -= MAX_LENGTH;
 
-			float currentSample0 = 
-				this->playBuffer[realPos] * (1 - frac) + 
-				this->playBuffer[pos >= length - 1 ? chunk * length : realPos + 1] * frac;
+			currentSample =
+				this->playBuffer[realPos] * (1 - frac)
+				+ this->playBuffer[realPos >= MAX_LENGTH - 1 || pos >= length - 1 ? scanPos : realPos + 1] * frac;
 
-			float currentSample1 = 
-				this->playBuffer[realPosNext] * (1 - frac) + 
-				this->playBuffer[pos >= length - 1 ? chunk * length + length : realPosNext + 1] * frac;
 
-			currentSample = currentSample0 * (1.f - chunkFrac) + currentSample1 * chunkFrac;
-			currentSample *= sin(M_PI * pos / (length - 1));
+			//currentSample *= sin(M_PI * pos / (length - 1));
 
 			this->playPosition += speed;
 
