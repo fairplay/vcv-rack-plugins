@@ -131,10 +131,10 @@ struct MicroLooperWidget : ModuleWidget {
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-		addParam(createParamCentered<TsButton>(mm2px(Vec(15.0, 24.0)), module, MicroLooper::RECBTN_PARAM));
-		addParam(createParamCentered<TsKnobBig>(mm2px(Vec(15.0, 42.0)), module, MicroLooper::LENGTHKNOB_PARAM));
-		addParam(createParamCentered<TsKnobBig>(mm2px(Vec(15.0, 60.0)), module, MicroLooper::SCANKNOB_PARAM));
-		addParam(createParamCentered<TsKnobBig>(mm2px(Vec(15.0, 78.0)), module, MicroLooper::SPEEDKNOB_PARAM));
+		addParam(createParamCentered<TsButton>(mm2px(Vec(13.82, 24.0)), module, MicroLooper::RECBTN_PARAM));
+		addParam(createParamCentered<TsKnobBig>(mm2px(Vec(13.82, 42.0)), module, MicroLooper::LENGTHKNOB_PARAM));
+		addParam(createParamCentered<TsKnobBig>(mm2px(Vec(13.82, 60.0)), module, MicroLooper::SCANKNOB_PARAM));
+		addParam(createParamCentered<TsKnobBig>(mm2px(Vec(13.82, 78.0)), module, MicroLooper::SPEEDKNOB_PARAM));
 
 		addInput(createInputCentered<Inlet>(mm2px(Vec(5.0, 24.0)), module, MicroLooper::RECSOCKET_INPUT));
 		addInput(createInputCentered<Inlet>(mm2px(Vec(5.0, 42.0)), module, MicroLooper::LENGTHSOCKET_INPUT));

@@ -9,7 +9,7 @@ extern Plugin* pluginInstance;
 
 // Declare each Model, defined in each module source file
 extern Model* modelMicroLooper;
-extern Model* modelFeigenbaum;
+extern Model* modelLogisticScratch;
 
 
 struct Inlet : app::SvgPort {
@@ -40,7 +40,7 @@ struct TsKnob : app::SvgKnob {
 struct TsKnobStd : TsKnob {
     TsKnobStd() {
 		setSvg(Svg::load(asset::plugin(pluginInstance, "res/KnobStd.svg")));
-        bg->setSvg(Svg::load(asset::system("res/KnobStd.svg")));
+        bg->setSvg(Svg::load(asset::plugin(pluginInstance, "res/KnobStd_bg.svg")));
     }
 };
 
@@ -51,6 +51,12 @@ struct TsKnobBig : TsKnob {
     }
 };
 
+struct TsKnobLarge : TsKnob {
+    TsKnobLarge() {
+		setSvg(Svg::load(asset::plugin(pluginInstance, "res/KnobLarge.svg")));
+        bg->setSvg(Svg::load(asset::plugin(pluginInstance, "res/KnobLarge_bg.svg")));
+    }
+};
 
 struct TsButton : app::SvgSwitch {
 	TsButton() {

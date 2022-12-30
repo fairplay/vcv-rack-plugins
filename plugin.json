@@ -1,6 +1,6 @@
 {
-  "slug": "MicroLooper",
-  "name": "MicroLooper",
+  "slug": "TyrannosaurusRu",
+  "name": "TyrannosaurusRu",
   "version": "2.0.0",
   "license": "WTFPL",
   "brand": "TyrannosaurusRu",
@@ -20,8 +20,8 @@
       "tags": []
     },
     {
-      "slug": "Feigenbaum",
-      "name": "Feigenbaum",
+      "slug": "LogisticScratch",
+      "name": "LogisticScratch",
       "description": "",
       "tags": []
     }

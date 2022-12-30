@@ -26,7 +26,7 @@
      showborder="true"
      inkscape:showpageshadow="false"
      inkscape:zoom="20.48"
-     inkscape:cx="14.257812"
+     inkscape:cx="13.623047"
      inkscape:cy="15.991211"
      inkscape:window-width="1920"
      inkscape:window-height="1019"
@@ -53,32 +53,36 @@
      id="layer1">
     <g
        id="g1300">
-      <ellipse
-         style="fill:#999593;fill-opacity:0;stroke:#fffff7;stroke-width:1.46708;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         id="path920"
-         cx="-4.5"
-         cy="-4.4999981"
-         transform="scale(-1)"
-         rx="3.6664619"
-         ry="3.6664598" />
-      <path
-         sodipodi:type="star"
-         style="fill:#020000;fill-opacity:1;stroke:#999593;stroke-width:0;stroke-linecap:round"
-         id="path2900"
-         inkscape:flatsided="true"
-         sodipodi:sides="3"
-         sodipodi:cx="15.11811"
-         sodipodi:cy="3.7795274"
-         sodipodi:r1="3.7795274"
-         sodipodi:r2="1.8897637"
-         sodipodi:arg1="1.5707963"
-         sodipodi:arg2="2.6179939"
-         inkscape:rounded="0"
-         inkscape:randomized="0"
-         transform="matrix(-0.15286143,-0.26720359,-0.26452305,0.15441042,7.8105208,4.6224163)"
-         inkscape:transform-center-y="-0.38157229"
-         inkscape:transform-center-x="-0.15470095"
-         d="m 15.11811,7.5590549 -3.273167,-5.6692911 6.546333,-2e-7 z" />
+      <g
+         id="g1555"
+         transform="matrix(0.97782434,0,0,0.97777084,0.09979048,0.09999991)">
+        <ellipse
+           style="fill:#999593;fill-opacity:0;stroke:#fffff7;stroke-width:1.49237;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="path920"
+           cx="-4.5"
+           cy="-4.5481334"
+           transform="scale(-1)"
+           rx="3.753814"
+           ry="3.7056792" />
+        <path
+           sodipodi:type="star"
+           style="fill:#020000;fill-opacity:1;stroke:#999593;stroke-width:0;stroke-linecap:round"
+           id="path2900"
+           inkscape:flatsided="true"
+           sodipodi:sides="3"
+           sodipodi:cx="15.11811"
+           sodipodi:cy="3.7795274"
+           sodipodi:r1="3.7795274"
+           sodipodi:r2="1.8897637"
+           sodipodi:arg1="1.5707963"
+           sodipodi:arg2="2.6179939"
+           inkscape:rounded="0"
+           inkscape:randomized="0"
+           transform="matrix(-0.1565033,-0.27006181,-0.27082522,0.15606211,7.8893927,4.6718613)"
+           inkscape:transform-center-y="-0.38565383"
+           inkscape:transform-center-x="-0.15838659"
+           d="m 15.11811,7.5590549 -3.273167,-5.6692911 6.546333,-2e-7 z" />
+      </g>
     </g>
   </g>
 </svg>

@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="9mm"
-   height="9mm"
-   viewBox="0 0 9 9"
+   width="12mm"
+   height="12mm"
+   viewBox="0 0 12 12"
    version="1.1"
    id="svg827"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
-   sodipodi:docname="KnobBig_bg.svg"
+   sodipodi:docname="KnobLarge_bg.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -25,9 +25,9 @@
      showgrid="true"
      showborder="true"
      inkscape:showpageshadow="false"
-     inkscape:zoom="20.48"
-     inkscape:cx="7.9589844"
-     inkscape:cy="15.161133"
+     inkscape:zoom="10.24"
+     inkscape:cx="15.039062"
+     inkscape:cy="23.095703"
      inkscape:window-width="1920"
      inkscape:window-height="1019"
      inkscape:window-x="0"
@@ -72,10 +72,10 @@
       <circle
          style="mix-blend-mode:normal;fill:#000002;fill-opacity:1;stroke:#000001;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="path920"
-         cx="4.5"
-         cy="-4.5"
+         cx="5.9999995"
+         cy="-5.9999995"
          transform="scale(1,-1)"
-         r="2.9999995" />
+         r="4.499999" />
     </g>
   </g>
   <script

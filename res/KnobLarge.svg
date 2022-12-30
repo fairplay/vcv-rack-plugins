@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="6mm"
-   height="6mm"
-   viewBox="0 0 6 6"
+   width="12mm"
+   height="12mm"
+   viewBox="0 0 12 12"
    version="1.1"
    id="svg827"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
-   sodipodi:docname="KnobStd.svg"
+   sodipodi:docname="KnobLarge.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -25,9 +25,9 @@
      showgrid="true"
      showborder="true"
      inkscape:showpageshadow="false"
-     inkscape:zoom="20.48"
-     inkscape:cx="13.330078"
-     inkscape:cy="15.991211"
+     inkscape:zoom="14.481547"
+     inkscape:cx="17.815776"
+     inkscape:cy="23.029308"
      inkscape:window-width="1920"
      inkscape:window-height="1019"
      inkscape:window-x="0"
@@ -55,7 +55,7 @@
        id="g1300">
       <g
          id="g1555"
-         transform="scale(0.66666682,0.66663034)">
+         transform="matrix(1.3000293,0,0,1.3000004,0.15036854,0.14985359)">
         <ellipse
            style="fill:#999593;fill-opacity:0;stroke:#fffff7;stroke-width:1.49237;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            id="path920"
