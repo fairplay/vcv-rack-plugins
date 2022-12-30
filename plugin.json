@@ -18,6 +18,12 @@
       "name": "MicroLooper",
       "description": "",
       "tags": []
+    },
+    {
+      "slug": "Feigenbaum",
+      "name": "Feigenbaum",
+      "description": "",
+      "tags": []
     }
   ]
 }

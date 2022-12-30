@@ -9,6 +9,7 @@ extern Plugin* pluginInstance;
 
 // Declare each Model, defined in each module source file
 extern Model* modelMicroLooper;
+extern Model* modelFeigenbaum;
 
 
 struct Inlet : app::SvgPort {
@@ -55,7 +56,7 @@ struct TsButton : app::SvgSwitch {
 	TsButton() {
 		momentary = true;
 		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnBig_0.svg")));
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnBig_1_yellow.svg")));
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnBig_1_red.svg")));
 	}
 };
 
@@ -63,5 +64,6 @@ struct TsButton : app::SvgSwitch {
 struct TsButtonLatch : TsButton {
 	TsButtonLatch() {
 		momentary = false;
+		latch = true;
 	}
 };
