@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="9mm"
-   height="9mm"
-   viewBox="0 0 9 9"
+   width="4mm"
+   height="4mm"
+   viewBox="0 0 4 4"
    version="1.1"
    id="svg827"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
-   sodipodi:docname="BtnBig_1_red.svg"
+   sodipodi:docname="BtnSmall_1_red.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -25,9 +25,9 @@
      showgrid="true"
      showborder="true"
      inkscape:showpageshadow="false"
-     inkscape:zoom="28.963094"
-     inkscape:cx="14.708373"
-     inkscape:cy="15.070904"
+     inkscape:zoom="20.48"
+     inkscape:cx="9.0820312"
+     inkscape:cy="11.84082"
      inkscape:window-width="1920"
      inkscape:window-height="1019"
      inkscape:window-x="0"
@@ -53,24 +53,21 @@
     <g
        id="g1300">
       <g
-         id="g11873">
-        <g
-           id="g858">
-          <circle
-             style="display:inline;fill:#fffffb;fill-opacity:1;stroke:#000000;stroke-width:0.100206;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-             id="path846"
-             cx="4.5"
-             cy="4.5"
-             r="4.4498973" />
-        </g>
+         id="g12016">
+        <circle
+           style="display:inline;fill:#feffff;fill-opacity:0.999046;stroke:#000000;stroke-width:0.044536;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="path846"
+           cx="1.9999999"
+           cy="1.9999999"
+           r="1.9777321" />
         <ellipse
-           style="fill:#ff3c00;fill-opacity:1;stroke:#000002;stroke-width:0.1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           style="fill:#ff3c00;fill-opacity:1;stroke:#000002;stroke-width:0.0444444;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            id="path920"
-           cx="-4.5"
-           cy="4.5000024"
+           cx="-1.9999999"
+           cy="2.000001"
            transform="scale(-1,1)"
-           ry="3.6668451"
-           rx="3.6670001" />
+           ry="1.6297089"
+           rx="1.6297777" />
       </g>
     </g>
   </g>
