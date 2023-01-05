@@ -25,15 +25,15 @@
      showgrid="true"
      showborder="true"
      inkscape:showpageshadow="false"
-     inkscape:zoom="14.481547"
-     inkscape:cx="9.9091623"
-     inkscape:cy="12.084344"
+     inkscape:zoom="40.96"
+     inkscape:cx="14.648438"
+     inkscape:cy="11.328125"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g1300"
+     inkscape:current-layer="layer1"
      inkscape:deskcolor="#d1d1d1">
     <inkscape:grid
        type="xygrid"
@@ -54,28 +54,22 @@
      inkscape:groupmode="layer"
      id="layer1">
     <g
-       id="g1300">
-      <g
-         id="g11873"
-         transform="matrix(0.66636345,0,0,0.66497229,0.00136417,-0.0016828)">
-        <g
-           id="g858">
-          <circle
-             style="display:inline;fill:#fffffb;fill-opacity:1;stroke:#000000;stroke-width:0.100206;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-             id="path846"
-             cx="4.5"
-             cy="4.5"
-             r="4.4498973" />
-        </g>
-        <ellipse
-           style="fill:#ff3c00;fill-opacity:1;stroke:#000002;stroke-width:0.1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path920"
-           cx="-4.5"
-           cy="4.5000024"
-           transform="scale(-1,1)"
-           ry="3.6668451"
-           rx="3.6670001" />
-      </g>
+       id="g21139">
+      <ellipse
+         style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.0667039;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
+         id="path846"
+         cx="2.9999998"
+         cy="2.9906926"
+         rx="2.9652488"
+         ry="2.9590583" />
+      <ellipse
+         style="fill:#ed2c24;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
+         id="path920"
+         cx="-2.9999998"
+         cy="2.990694"
+         transform="scale(-1,1)"
+         ry="2.4383504"
+         rx="2.4435549" />
     </g>
   </g>
 </svg>

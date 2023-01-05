@@ -32,7 +32,7 @@ struct TsKnob : app::SvgKnob {
 	TsKnob() {
 		minAngle = -0.83 * M_PI;
 		maxAngle = 0.83 * M_PI;
-		
+
         bg = new widget::SvgWidget;
 		fb->addChildBelow(bg, tw);
 		speed = 2.f;
@@ -84,20 +84,6 @@ struct TsButton : app::SvgSwitch {
 
 struct TsButtonPush : TsButton {
 	TsButtonPush() {
-		momentary = false;
-	}
-};
-
-struct TsButtonSmall : app::SvgSwitch {
-	TsButtonSmall() {
-		momentary = true;
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnSmall_0.svg")));
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnSmall_1_red.svg")));
-	}
-};
-
-struct TsButtonSmallPush : TsButtonSmall {
-	TsButtonSmallPush() {
 		momentary = false;
 	}
 };

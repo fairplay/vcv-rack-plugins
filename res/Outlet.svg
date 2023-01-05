@@ -7,7 +7,7 @@
    viewBox="0 0 6 6"
    version="1.1"
    id="svg827"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
    sodipodi:docname="Outlet.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -26,14 +26,15 @@
      showborder="true"
      inkscape:showpageshadow="false"
      inkscape:zoom="28.963094"
-     inkscape:cx="11.462864"
-     inkscape:cy="9.8228457"
+     inkscape:cx="10.116323"
+     inkscape:cy="9.8401089"
      inkscape:window-width="1920"
-     inkscape:window-height="1019"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1">
+     inkscape:current-layer="layer1"
+     inkscape:deskcolor="#d1d1d1">
     <inkscape:grid
        type="xygrid"
        id="grid888"
@@ -50,18 +51,21 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <ellipse
-       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.100042;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path920"
-       cx="3"
-       cy="3.0000002"
-       rx="2.9499786"
-       ry="2.9499788" />
-    <circle
-       style="display:inline;fill:#000000;fill-opacity:1;stroke:#fbfbfb;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path1159"
-       cx="3"
-       cy="3"
-       r="1.9999995" />
+    <g
+       id="g6464">
+      <ellipse
+         style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#999593;stroke-width:0.100042;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path920"
+         cx="3"
+         cy="3.0000002"
+         rx="2.9499786"
+         ry="2.9499788" />
+      <circle
+         style="display:inline;fill:#000000;fill-opacity:1;stroke:#fbfbfb;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path1159"
+         cx="3"
+         cy="3"
+         r="1.9999995" />
+    </g>
   </g>
 </svg>

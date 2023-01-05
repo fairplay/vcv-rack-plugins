@@ -30,18 +30,17 @@ struct MicroLooper : Module {
 
 	MicroLooper() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
-		configParam(RECBTN_PARAM, 0.f, 1.f, 0.f, "");
+		configParam(RECBTN_PARAM, 0.f, 1.f, 0.f, "Recording");
 		configParam(LENGTHKNOB_PARAM, (float)MIN_BITS, (float)MAX_BITS, (float)MAX_BITS, "Length", " samples", 2.f, 1.f, 0.f);
 		configParam(SCANKNOB_PARAM, 0.f, (float)(MAX_LENGTH - 1), 0.f, "Scan position", "");
 		configParam(SPEEDKNOB_PARAM, -5.f, 5.f, 1.f, "Speed", " samples");
-		configInput(RECSOCKET_INPUT, "");
-		configInput(LENGTHSOCKET_INPUT, "");
-		configInput(SCANSOCKET_INPUT, "");
-		configInput(SPEEDSOCKET_INPUT, "");
+		configInput(RECSOCKET_INPUT, "Recording");
+		configInput(LENGTHSOCKET_INPUT, "Length");
+		configInput(SCANSOCKET_INPUT, "Scan position");
+		configInput(SPEEDSOCKET_INPUT, "Speed");
 		configInput(INSOCKET_INPUT, "");
 		configOutput(OUTSOCKET_OUTPUT, "");
 	}
-
 
 	bool isSmooth = false;
 	bool isRecord = false;
@@ -60,7 +59,6 @@ struct MicroLooper : Module {
 			this->isRecord = !this->isRecord;
 			params[RECBTN_PARAM].setValue(this->isRecord ? 1.0 : 0.0);
 		}
-
 
 		float speed = params[SPEEDKNOB_PARAM].getValue();
 		if (inputs[SPEEDSOCKET_INPUT].isConnected()) {

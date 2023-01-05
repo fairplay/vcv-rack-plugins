@@ -61,48 +61,49 @@ struct LFSR8 : Module {
 	LFSR8() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 
-		configParam(A0_PARAM, 0.f, 1.f, 0.f, "");		
-		configParam(A1_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(A2_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(A3_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(A4_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(A5_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(A6_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(A7_PARAM, 0.f, 1.f, 0.f, "");
+		configParam(A0_PARAM, 0.f, 1.f, 0.f, "a0");
+		configParam(A1_PARAM, 0.f, 1.f, 0.f, "a1");
+		configParam(A2_PARAM, 0.f, 1.f, 0.f, "a2");
+		configParam(A3_PARAM, 0.f, 1.f, 0.f, "a3");
+		configParam(A4_PARAM, 0.f, 1.f, 0.f, "a4");
+		configParam(A5_PARAM, 0.f, 1.f, 0.f, "a5");
+		configParam(A6_PARAM, 0.f, 1.f, 0.f, "a6");
+		configParam(A7_PARAM, 0.f, 1.f, 0.f, "a7");
 
-		configParam(LEN_PARAM, 1.f, 8.f, 8.f, "");
+		configParam(LEN_PARAM, 1.f, 8.f, 8.f, "Sequence length");
 		paramQuantities[LEN_PARAM]->snapEnabled = true;
-		configParam(NOT_PARAM, 0.f, 1.f, 0.f, "");
 
-		configParam(CVO0_PARAM, 0.f, 1.f, 0.5f, "");		
+		configParam(NOT_PARAM, 0.f, 1.f, 0.f, "XNOR");
+
+		configParam(CVO0_PARAM, 0.f, 1.f, 0.5f, "");
 		configParam(CVO1_PARAM, 0.f, 1.f, 0.5f, "");
 		configParam(CVO2_PARAM, 0.f, 1.f, 0.5f, "");
 		configParam(CVO3_PARAM, 0.f, 1.f, 0.5f, "");
 
-		configInput(GATE_INPUT, "");
-		configInput(I0_INPUT, "");
-		configInput(I1_INPUT, "");
-		configInput(I2_INPUT, "");
-		configInput(I3_INPUT, "");
-		configInput(I4_INPUT, "");
-		configInput(I5_INPUT, "");
-		configInput(I6_INPUT, "");
-		configInput(I7_INPUT, "");
-		configInput(INOT_INPUT, "");
-		
-		configOutput(GO0_OUTPUT, "");
-		configOutput(GO1_OUTPUT, "");
-		configOutput(GO2_OUTPUT, "");
-		configOutput(GO3_OUTPUT, "");
-		configOutput(GO4_OUTPUT, "");
-		configOutput(GO5_OUTPUT, "");
-		configOutput(GO6_OUTPUT, "");
-		configOutput(GO7_OUTPUT, "");
+		configInput(GATE_INPUT, "Clock");
+		configInput(I0_INPUT, "a0");
+		configInput(I1_INPUT, "a1");
+		configInput(I2_INPUT, "a2");
+		configInput(I3_INPUT, "a3");
+		configInput(I4_INPUT, "a4");
+		configInput(I5_INPUT, "a5");
+		configInput(I6_INPUT, "a6");
+		configInput(I7_INPUT, "a7");
+		configInput(INOT_INPUT, "XNOR");
 
-		configOutput(VO0_OUTPUT, "");
-		configOutput(VO1_OUTPUT, "");
-		configOutput(VO2_OUTPUT, "");
-		configOutput(VO3_OUTPUT, "");
+		configOutput(GO0_OUTPUT, "x0");
+		configOutput(GO1_OUTPUT, "x1");
+		configOutput(GO2_OUTPUT, "x2");
+		configOutput(GO3_OUTPUT, "x3");
+		configOutput(GO4_OUTPUT, "x4");
+		configOutput(GO5_OUTPUT, "x5");
+		configOutput(GO6_OUTPUT, "x6");
+		configOutput(GO7_OUTPUT, "x7");
+
+		configOutput(VO0_OUTPUT, "CV0");
+		configOutput(VO1_OUTPUT, "CV1");
+		configOutput(VO2_OUTPUT, "CV2");
+		configOutput(VO3_OUTPUT, "CV3");
 	}
 
 	bool triggered;
@@ -158,7 +159,7 @@ struct LFSR8 : Module {
 		}
 
 		float vo0 = 0.f, vo1 = 0.f, vo2 = 0.f, vo3 = 0.f;
-				
+
 		for(int i = 0; i < 8; i++) {
 			int gateOut = GO0_OUTPUT + i;
 			int bit = (state & (1 << gateOut)) >> gateOut;
@@ -167,24 +168,24 @@ struct LFSR8 : Module {
 			if (trigger.isHigh()) {
 				go = (float)(bit * 10);
 			}
-			outputs[gateOut].setVoltage(go);		
+			outputs[gateOut].setVoltage(go);
 
 			vo0 += (float)bit * params[(0 + i) % 4 + CVO0_PARAM].getValue();
 			vo1 += (float)bit * params[(1 + i) % 4 + CVO0_PARAM].getValue();
 			vo2 += (float)bit * params[(2 + i) % 4 + CVO0_PARAM].getValue();
 			vo3 += (float)bit * params[(3 + i) % 4 + CVO0_PARAM].getValue();
 		}
-		
-		if (trigger.isHigh()) {					
+
+		if (trigger.isHigh()) {
 			outputs[VO0_OUTPUT].setVoltage(vo0);
 			outputs[VO1_OUTPUT].setVoltage(vo1);
 			outputs[VO2_OUTPUT].setVoltage(vo2);
-			outputs[VO3_OUTPUT].setVoltage(vo3);						
+			outputs[VO3_OUTPUT].setVoltage(vo3);
 		}
 
 		triggered = false;
 	}
-	
+
 	void onReset(const ResetEvent& e) override {
 		state = 1;
 	}

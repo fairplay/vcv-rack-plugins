@@ -1,6 +1,4 @@
 #include "plugin.hpp"
-//using simd::float;
-
 
 struct LogisticScratch : Module {
 	enum ParamId {
@@ -28,14 +26,14 @@ struct LogisticScratch : Module {
 	LogisticScratch() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 		configParam(FREQKNOB_PARAM, -54.f, 54.f, 0.f, "Frequency", " Hz", dsp::FREQ_SEMITONE, dsp::FREQ_C4);
-		configParam(L1KNOB_PARAM, 0.75f, 1.f, 0.75f, "", "");
-		configParam(L2KNOB_PARAM, 0.75f, 1.f, 1.00f, "", "");
-		configParam(DXKNOB_PARAM, 0.001f, 1.f, 0.001f, "");
-		configInput(FREQSOCKET_INPUT, "");
-		configInput(L1SOCKET_INPUT, "");
-		configInput(L2SOCKET_INPUT, "");
-		configInput(DXSOCKET_INPUT, "");
-		configOutput(OUTSOCKET_OUTPUT, "");
+		configParam(L1KNOB_PARAM, 0.75f, 1.f, 0.75f, "", "λ1");
+		configParam(L2KNOB_PARAM, 0.75f, 1.f, 1.00f, "", "λ2");
+		configParam(DXKNOB_PARAM, 0.001f, 1.f, 0.001f, "Δx");
+		configInput(FREQSOCKET_INPUT, "Frequency");
+		configInput(L1SOCKET_INPUT, "λ1");
+		configInput(L2SOCKET_INPUT, "λ2");
+		configInput(DXSOCKET_INPUT, "Δx");
+		configOutput(OUTSOCKET_OUTPUT);
 	}
 
 	enum Stage {
@@ -47,7 +45,7 @@ struct LogisticScratch : Module {
 	Stage stage = SLIP;
 	float x = 0.618f;
 	float xn = 0.f;
-	float l1, l2; 
+	float l1, l2;
 	float l = 0.f;
 
 	void process(const ProcessArgs& args) override {
@@ -60,7 +58,7 @@ struct LogisticScratch : Module {
 		float l1 = params[L1KNOB_PARAM].getValue();
 		float l2 = params[L2KNOB_PARAM].getValue();
 		float dx = params[DXKNOB_PARAM].getValue();
-		
+
 		if (inputs[L1SOCKET_INPUT].isConnected()) {
 			l1 = inputs[L1SOCKET_INPUT].getVoltage() * 0.1f * 0.25f + 0.75f;
 		}
@@ -97,11 +95,10 @@ struct LogisticScratch : Module {
 			stage = STICK;
 		} else {
 			x = xn;
-			stage = SLIP;	
+			stage = SLIP;
 		}
 
 		outputs[OUTSOCKET_OUTPUT].setVoltage(x * 10.f - 5.f);
-
 	}
 };
 
