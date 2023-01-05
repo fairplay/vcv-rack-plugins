@@ -16,7 +16,7 @@
     {
       "slug": "MicroLooper",
       "name": "MicroLooper",
-      "description": "Recording sampler for the very short (65536 samples max) loops",
+      "description": "Recording sampler for the very short (16384 samples max) loops",
       "tags": ["Sampler", "Recording"]
     },
     {

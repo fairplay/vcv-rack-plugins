@@ -25,14 +25,15 @@ struct MicroLooper : Module {
 	};
 
 	const static int MIN_BITS = 6;
-	const static int MAX_BITS = 16;
+	const static int MAX_BITS = 14;
 	const static int MAX_LENGTH = pow(2, MAX_BITS);
+	const static int MAX_CHUNKS = pow(2, MAX_BITS - MIN_BITS) - 1;
 
 	MicroLooper() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 		configParam(RECBTN_PARAM, 0.f, 1.f, 0.f, "Recording");
-		configParam(LENGTHKNOB_PARAM, (float)MIN_BITS, (float)MAX_BITS, (float)MAX_BITS, "Length", " samples", 2.f, 1.f, 0.f);
-		configParam(SCANKNOB_PARAM, 0.f, (float)(MAX_LENGTH - 1), 0.f, "Scan position", "");
+		configParam(LENGTHKNOB_PARAM, (float)MIN_BITS, (float)MAX_BITS, (float)MAX_BITS, "Length", "", 2.f, 1.f, 0.f);
+		configParam(SCANKNOB_PARAM, 0.f, (float)MAX_CHUNKS, 1.f, "Chunk", "", 0.f, 1.f, 1.f);
 		configParam(SPEEDKNOB_PARAM, -5.f, 5.f, 1.f, "Speed", " samples");
 		configInput(RECSOCKET_INPUT, "Recording");
 		configInput(LENGTHSOCKET_INPUT, "Length");
@@ -40,6 +41,8 @@ struct MicroLooper : Module {
 		configInput(SPEEDSOCKET_INPUT, "Speed");
 		configInput(INSOCKET_INPUT, "");
 		configOutput(OUTSOCKET_OUTPUT, "");
+
+		paramQuantities[LENGTHKNOB_PARAM]->snapEnabled = true;
 	}
 
 	bool isSmooth = false;
@@ -52,7 +55,6 @@ struct MicroLooper : Module {
 	float playPosition = 0.f;
 
 	void process(const ProcessArgs& args) override {
-
 		this->isRecord = params[RECBTN_PARAM].getValue() > 0.f;
 
 		if (recordTrigger.process(inputs[RECSOCKET_INPUT].getVoltage())) {
@@ -73,12 +75,14 @@ struct MicroLooper : Module {
 		}
 		int length = pow(2, (int)lengthRaw);
 
-		float scanPosRaw = params[SCANKNOB_PARAM].getValue();
+		float chunkRaw = params[SCANKNOB_PARAM].getValue();
 		if (inputs[SCANSOCKET_INPUT].isConnected()) {
-			scanPosRaw = inputs[SCANSOCKET_INPUT].getVoltage() * (float)(MAX_LENGTH) * 0.1f;
-			scanPosRaw = clamp(scanPosRaw, 0.f, (float)(MAX_LENGTH - 1));
+			chunkRaw = inputs[SCANSOCKET_INPUT].getVoltage() * (float)(MAX_CHUNKS) * 0.1f;
+			chunkRaw = clamp(chunkRaw, 0.f, (float)MAX_CHUNKS);
 		}
-		int scanPos = (int)scanPosRaw;
+		int chunk = (int)chunkRaw;
+		float chunkFrac = chunkRaw - (float)chunk;
+		chunk = (chunk * length % MAX_LENGTH) / length;
 
 		float currentSample = 0.f;
 
@@ -86,15 +90,23 @@ struct MicroLooper : Module {
 			int pos = (int)this->playPosition;
 			float frac = this->playPosition - (float)pos;
 
-			int realPos = pos + scanPos;
-			if (realPos >= MAX_LENGTH) realPos -= MAX_LENGTH;
+			int realPos = pos + chunk * length;
+			int realPosNext = realPos + length;
+			if (realPosNext >= MAX_LENGTH) realPosNext -= MAX_LENGTH;
 
-			currentSample =
-				this->playBuffer[realPos] * (1 - frac)
-				+ this->playBuffer[realPos >= MAX_LENGTH - 1 || pos >= length - 1 ? scanPos : realPos + 1] * frac;
+			float currentSample0 =
+				this->playBuffer[realPos] * (1 - frac) +
+				this->playBuffer[pos >= length - 1 ? chunk * length : realPos + 1] * frac;
 
+			float currentSample1 =
+				this->playBuffer[realPosNext] * (1 - frac) +
+				this->playBuffer[pos >= length - 1 ? chunk * length + length : realPosNext + 1] * frac;
 
-			if (this->isSmooth) currentSample *= sin(M_PI * pos / (length - 1));
+			currentSample = currentSample0 * (1.f - chunkFrac) + currentSample1 * chunkFrac;
+
+			if (this->isSmooth) {
+				currentSample *= sin(M_PI * pos / (length - 1));
+			}
 
 			this->playPosition += speed;
 
@@ -110,6 +122,7 @@ struct MicroLooper : Module {
 				currentSample = this->recordBuffer[this->recordPosition];
 			}
 			if (this->recordPosition >= MAX_LENGTH) {
+				this->playPosition = 0;
 				this->recordPosition = 0;
 				for (int i = 0; i < MAX_LENGTH; i++) {
 					this->playBuffer[i] = this->recordBuffer[i];
