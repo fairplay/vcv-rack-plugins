@@ -24,6 +24,12 @@
       "name": "LogisticScratch",
       "description": "",
       "tags": []
+    },
+    {
+      "slug": "LFSR8",
+      "name": "LFSR8",
+      "description": "",
+      "tags": []
     }
   ]
 }

@@ -10,6 +10,7 @@ extern Plugin* pluginInstance;
 // Declare each Model, defined in each module source file
 extern Model* modelMicroLooper;
 extern Model* modelLogisticScratch;
+extern Model* modelLFSR8;
 
 
 struct Inlet : app::SvgPort {
@@ -34,6 +35,7 @@ struct TsKnob : app::SvgKnob {
 		
         bg = new widget::SvgWidget;
 		fb->addChildBelow(bg, tw);
+		speed = 2.f;
 	}
 };
 
@@ -58,18 +60,52 @@ struct TsKnobLarge : TsKnob {
     }
 };
 
-struct TsButton : app::SvgSwitch {
-	TsButton() {
+struct TsButtonLarge : app::SvgSwitch {
+	TsButtonLarge() {
 		momentary = true;
 		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnBig_0.svg")));
 		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnBig_1_red.svg")));
 	}
 };
 
-
-struct TsButtonLatch : TsButton {
-	TsButtonLatch() {
+struct TsButtonLargePush : TsButtonLarge {
+	TsButtonLargePush() {
 		momentary = false;
-		latch = true;
 	}
 };
+
+struct TsButton : app::SvgSwitch {
+	TsButton() {
+		momentary = true;
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnStd_0.svg")));
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnStd_1_red.svg")));
+	}
+};
+
+struct TsButtonPush : TsButton {
+	TsButtonPush() {
+		momentary = false;
+	}
+};
+
+struct TsButtonSmall : app::SvgSwitch {
+	TsButtonSmall() {
+		momentary = true;
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnSmall_0.svg")));
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnSmall_1_red.svg")));
+	}
+};
+
+struct TsButtonSmallPush : TsButtonSmall {
+	TsButtonSmallPush() {
+		momentary = false;
+	}
+};
+
+template <typename TBase>
+struct TsLightStd : TSvgLight<TBase> {
+	TsLightStd() {
+		this->setSvg(Svg::load(asset::plugin(pluginInstance, "res/LightStd.svg")));
+	}
+};
+

@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="9mm"
-   height="9mm"
-   viewBox="0 0 9 9"
+   width="4mm"
+   height="4mm"
+   viewBox="0 0 4 4"
    version="1.1"
    id="svg827"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
-   sodipodi:docname="BtnBig_1_red.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="LightStd.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -25,15 +25,16 @@
      showgrid="true"
      showborder="true"
      inkscape:showpageshadow="false"
-     inkscape:zoom="28.963094"
-     inkscape:cx="14.708373"
-     inkscape:cy="15.070904"
+     inkscape:zoom="14.481547"
+     inkscape:cx="-0.72506066"
+     inkscape:cy="14.501213"
      inkscape:window-width="1920"
-     inkscape:window-height="1019"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g1300">
+     inkscape:current-layer="g1300"
+     inkscape:deskcolor="#d1d1d1">
     <inkscape:grid
        type="xygrid"
        id="grid888"
@@ -42,7 +43,9 @@
        spacingx="0.99999997"
        spacingy="0.99999997"
        visible="true"
-       enabled="true" />
+       enabled="true"
+       originx="0"
+       originy="0" />
   </sodipodi:namedview>
   <defs
      id="defs824" />
@@ -52,26 +55,14 @@
      id="layer1">
     <g
        id="g1300">
-      <g
-         id="g11873">
-        <g
-           id="g858">
-          <circle
-             style="display:inline;fill:#fffffb;fill-opacity:1;stroke:#000000;stroke-width:0.100206;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-             id="path846"
-             cx="4.5"
-             cy="4.5"
-             r="4.4498973" />
-        </g>
-        <ellipse
-           style="fill:#ff3c00;fill-opacity:1;stroke:#000002;stroke-width:0.1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path920"
-           cx="-4.5"
-           cy="4.5000024"
-           transform="scale(-1,1)"
-           ry="3.6668451"
-           rx="3.6670001" />
-      </g>
+      <ellipse
+         style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path920"
+         cx="-1.9999995"
+         cy="1.9999998"
+         transform="scale(-1,1)"
+         ry="1.9999993"
+         rx="1.999999" />
     </g>
   </g>
 </svg>

@@ -107,8 +107,9 @@ struct MicroLooper : Module {
 				this->playPosition -= (float)length;
 			}
 		} else {
+			this->recordBuffer[this->recordPosition++] = inputs[INSOCKET_INPUT].getVoltage();
 			if (this->isMonitor) {
-				currentSample = this->recordBuffer[this->recordPosition++] = inputs[INSOCKET_INPUT].getVoltage();
+				currentSample = this->recordBuffer[this->recordPosition];
 			}
 			if (this->recordPosition >= MAX_LENGTH) {
 				this->recordPosition = 0;
@@ -131,7 +132,7 @@ struct MicroLooperWidget : ModuleWidget {
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-		addParam(createParamCentered<TsButton>(mm2px(Vec(13.82, 24.0)), module, MicroLooper::RECBTN_PARAM));
+		addParam(createParamCentered<TsButtonLarge>(mm2px(Vec(13.82, 24.0)), module, MicroLooper::RECBTN_PARAM));
 		addParam(createParamCentered<TsKnobBig>(mm2px(Vec(13.82, 42.0)), module, MicroLooper::LENGTHKNOB_PARAM));
 		addParam(createParamCentered<TsKnobBig>(mm2px(Vec(13.82, 60.0)), module, MicroLooper::SCANKNOB_PARAM));
 		addParam(createParamCentered<TsKnobBig>(mm2px(Vec(13.82, 78.0)), module, MicroLooper::SPEEDKNOB_PARAM));
