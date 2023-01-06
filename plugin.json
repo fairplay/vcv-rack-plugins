@@ -17,19 +17,36 @@
       "slug": "MicroLooper",
       "name": "MicroLooper",
       "description": "Recording sampler for the very short (16384 samples max) loops",
-      "tags": ["Sampler", "Recording"]
+      "tags": [
+        "Sampler",
+        "Recording"
+      ]
     },
     {
       "slug": "LogisticScratch",
       "name": "LogisticScratch",
       "description": "Scratching chaotic oscillator based on https://www.mathematica-journal.com/2013/05/27/using-the-logistic-map-to-generate-scratching-sounds/",
-      "tags": ["Oscillator", "Noise", "Physical modeling"]
+      "tags": [
+        "Oscillator",
+        "Noise",
+        "Physical modeling"
+      ]
     },
     {
       "slug": "LFSR8",
       "name": "LFSR8",
       "description": "Fully deterministic sequencer based on 8-bit LFSR capable to produce pseudo-random results",
-      "tags": ["Sequencer"]
+      "tags": [
+        "Sequencer"
+      ]
+    },
+    {
+      "slug": "LFSR16",
+      "name": "LFSR16",
+      "description": "16-bit LFSR sequencer with ability to split for two independent registers",
+      "tags": [
+        "Sequencer"
+      ]
     }
   ]
 }

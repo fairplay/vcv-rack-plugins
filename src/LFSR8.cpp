@@ -119,15 +119,15 @@ struct LFSR8 : Module {
 		}
 
 		__UINT8_TYPE__ newBit = __builtin_popcount(ad & state) & 1;
-		state &= (1 << length) - 1;
 		state = (state << 1) | (params[NOT_PARAM].getValue() > 0.f ? !newBit : newBit);
+		state &= (1 << length) - 1;
 	}
 
 	void leds() {
 		__UINT8_TYPE__ bits = state;
 		for(int i = 0; i < length; i++) {
 			float bit = (float)(bits & 1);
-			lights[i].setBrightness(0.8f * bit + 0.2f);
+			lights[i].setBrightness(0.9f * bit + 0.1f);
 			bits >>= 1;
 		}
 		for(int i = length; i < 8; i++) {
@@ -201,15 +201,15 @@ struct LFSR8Widget : ModuleWidget {
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-		addParam(createParamCentered<TsButtonPush>(mm2px(Vec(20.0, 25.0)), module, LFSR8::A0_PARAM));
-		addParam(createParamCentered<TsButtonPush>(mm2px(Vec(20.0, 35.0)), module, LFSR8::A1_PARAM));
-		addParam(createParamCentered<TsButtonPush>(mm2px(Vec(20.0, 45.0)), module, LFSR8::A2_PARAM));
-		addParam(createParamCentered<TsButtonPush>(mm2px(Vec(20.0, 55.0)), module, LFSR8::A3_PARAM));
-		addParam(createParamCentered<TsButtonPush>(mm2px(Vec(20.0, 65.0)), module, LFSR8::A4_PARAM));
-		addParam(createParamCentered<TsButtonPush>(mm2px(Vec(20.0, 75.0)), module, LFSR8::A5_PARAM));
-		addParam(createParamCentered<TsButtonPush>(mm2px(Vec(20.0, 85.0)), module, LFSR8::A6_PARAM));
-		addParam(createParamCentered<TsButtonPush>(mm2px(Vec(20.0, 95.0)), module, LFSR8::A7_PARAM));
-		addParam(createParamCentered<TsButtonPush>(mm2px(Vec(20.0, 105.0)), module, LFSR8::NOT_PARAM));
+		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(20.0, 25.0)), module, LFSR8::A0_PARAM));
+		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(20.0, 35.0)), module, LFSR8::A1_PARAM));
+		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(20.0, 45.0)), module, LFSR8::A2_PARAM));
+		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(20.0, 55.0)), module, LFSR8::A3_PARAM));
+		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(20.0, 65.0)), module, LFSR8::A4_PARAM));
+		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(20.0, 75.0)), module, LFSR8::A5_PARAM));
+		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(20.0, 85.0)), module, LFSR8::A6_PARAM));
+		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(20.0, 95.0)), module, LFSR8::A7_PARAM));
+		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(20.0, 105.0)), module, LFSR8::NOT_PARAM));
 
 		addParam(createParamCentered<TsKnobStd>(mm2px(Vec(10.0, 105.0)), module, LFSR8::LEN_PARAM));
 

@@ -11,12 +11,12 @@ extern Plugin* pluginInstance;
 extern Model* modelMicroLooper;
 extern Model* modelLogisticScratch;
 extern Model* modelLFSR8;
+extern Model* modelLFSR16;
 
 
 struct Inlet : app::SvgPort {
 	Inlet() {
 		setSvg(Svg::load(asset::plugin(pluginInstance, "res/Inlet.svg")));
-		//shadow->opacity = 0.0;
 	}
 };
 
@@ -60,7 +60,13 @@ struct TsKnobLarge : TsKnob {
     }
 };
 
-struct TsButtonLarge : app::SvgSwitch {
+struct TsButton : app::SvgSwitch {
+	TsButton() {
+		shadow->opacity = 0.02;
+	}
+};
+
+struct TsButtonLarge : TsButton {
 	TsButtonLarge() {
 		momentary = true;
 		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnBig_0.svg")));
@@ -74,16 +80,16 @@ struct TsButtonLargePush : TsButtonLarge {
 	}
 };
 
-struct TsButton : app::SvgSwitch {
-	TsButton() {
+struct TsButtonStd : TsButton {
+	TsButtonStd() {
 		momentary = true;
 		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnStd_0.svg")));
 		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnStd_1_red.svg")));
 	}
 };
 
-struct TsButtonPush : TsButton {
-	TsButtonPush() {
+struct TsButtonStdPush : TsButtonStd {
+	TsButtonStdPush() {
 		momentary = false;
 	}
 };
@@ -95,3 +101,9 @@ struct TsLightStd : TSvgLight<TBase> {
 	}
 };
 
+template <typename TBase>
+struct TsLightSquareLarge : RectangleLight<TSvgLight<TBase>> {
+	TsLightSquareLarge() {
+		this->setSvg(Svg::load(asset::plugin(pluginInstance, "res/LightSquareLarge.svg")));
+	}
+};
