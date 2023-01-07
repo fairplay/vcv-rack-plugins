@@ -27,7 +27,6 @@ struct LFSR16 : Module {
 	enum InputId {
 		GATE1_INPUT,
 		GATE2_INPUT,
-		GATE_INPUT,
 		INPUTS_LEN
 	};
 	enum OutputId {
@@ -47,6 +46,8 @@ struct LFSR16 : Module {
 		G5_OUTPUT,
 		G6_OUTPUT,
 		G7_OUTPUT,
+		GATE1_OUT_OUTPUT,
+		GATE2_OUT_OUTPUT,
 		OUTPUTS_LEN
 	};
 	enum LightId {
@@ -99,32 +100,32 @@ struct LFSR16 : Module {
 		configInput(GATE1_INPUT, "Trigger sequence 1");
 		configInput(GATE2_INPUT, "Trigger sequence 1");
 
-		configOutput(CV0_OUTPUT, "CV0");
-		configOutput(CV1_OUTPUT, "CV1");
-		configOutput(CV2_OUTPUT, "CV2");
-		configOutput(CV3_OUTPUT, "CV3");
-		configOutput(CV4_OUTPUT, "CV4");
-		configOutput(CV5_OUTPUT, "CV5");
-		configOutput(CV6_OUTPUT, "CV6");
-		configOutput(CV7_OUTPUT, "CV7");
-		configOutput(G0_OUTPUT, "Gate 0");
-		configOutput(G1_OUTPUT, "Gate 1");
-		configOutput(G2_OUTPUT, "Gate 2");
-		configOutput(G3_OUTPUT, "Gate 3");
-		configOutput(G4_OUTPUT, "Gate 4");
-		configOutput(G5_OUTPUT, "Gate 5");
-		configOutput(G6_OUTPUT, "Gate 6");
-		configOutput(G7_OUTPUT, "Gate 7");
+		configOutput(CV0_OUTPUT, "Column 1 CV");
+		configOutput(CV1_OUTPUT, "Column 2 CV");
+		configOutput(CV2_OUTPUT, "Column 3 CV");
+		configOutput(CV3_OUTPUT, "Column 4 CV");
+		configOutput(CV4_OUTPUT, "Row 1 CV");
+		configOutput(CV5_OUTPUT, "Row 2 CV");
+		configOutput(CV6_OUTPUT, "Row 3 CV");
+		configOutput(CV7_OUTPUT, "Row 4 CV");
+		configOutput(G0_OUTPUT, "XORed column 1");
+		configOutput(G1_OUTPUT, "XORed column 2");
+		configOutput(G2_OUTPUT, "XORed column 3");
+		configOutput(G3_OUTPUT, "XORed column 4");
+		configOutput(G4_OUTPUT, "XORed row 1");
+		configOutput(G5_OUTPUT, "XORed row 2");
+		configOutput(G6_OUTPUT, "XORed row 3");
+		configOutput(G7_OUTPUT, "XORed row 4");
+		configOutput(GATE1_OUT_OUTPUT, "Gate Sequence 1");
+		configOutput(GATE1_OUT_OUTPUT, "Gate Sequence 2");
 	}
 
 	bool triggered1 = false;
 	bool triggered2 = false;
-	bool triggered = false;
 	int state1 = 1;
 	int state2 = 1;;
 	dsp::SchmittTrigger trigger1;
-	dsp::SchmittTrigger trigger2;
-	dsp::SchmittTrigger trigger;
+	dsp::SchmittTrigger trigger2;	
 	int split = MAX_LENGTH;
 
 	void leds() {
@@ -181,6 +182,8 @@ struct LFSR16 : Module {
 			verMask <<= 1;
 			horMask <<= 4;
 		}
+		outputs[GATE1_OUT_OUTPUT].setVoltage(10.f * (float)(state1 & 1));
+		outputs[GATE2_OUT_OUTPUT].setVoltage(10.f * (float)(state2 & 1));
 	}
 
 	void process(const ProcessArgs& args) override {
@@ -201,22 +204,8 @@ struct LFSR16 : Module {
 			state2 = lfsr(split, MAX_LENGTH, state2, params[NOT2_PARAM].getValue() > 0.f);
 		}
 
-		if (trigger.process(inputs[GATE_INPUT].getVoltage(), 0.1f, 2.f)) {
-			triggered ^= true;
-		}
 
-		bool doOut = true;
-		if (inputs[GATE_INPUT].isConnected()) {
-			doOut = trigger.isHigh();
-		}
-
-		if (doOut) {
-			out();
-		} else {
-			for (int i = 0; i < 8; i++) {
-				outputs[G0_OUTPUT + i].setVoltage(0.f);
-			}
-		}
+		out();
 
 		triggered1 = triggered2 = false;
 	}
@@ -226,7 +215,6 @@ struct LFSR16 : Module {
 		state2 = 1;
 	}
 };
-
 
 struct LFSR16Widget : ModuleWidget {
 	LFSR16Widget(LFSR16* module) {
@@ -254,14 +242,13 @@ struct LFSR16Widget : ModuleWidget {
 		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(25.4, 105.0)), module, LFSR16::A13_PARAM));
 		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(35.4, 105.0)), module, LFSR16::A14_PARAM));
 		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(45.4, 105.0)), module, LFSR16::A15_PARAM));
-		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(5.4, 105.0)), module, LFSR16::NOT1_PARAM));
-		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(55.4, 105.0)), module, LFSR16::NOT2_PARAM));
+		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(5.4, 99.0)), module, LFSR16::NOT1_PARAM));
+		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(55.4, 99.0)), module, LFSR16::NOT2_PARAM));
 
-		addParam(createParamCentered<TsKnobStd>(mm2px(Vec(45.4, 115.0)), module, LFSR16::SPLIT_PARAM));
+		addParam(createParamCentered<TsKnobStd>(mm2px(Vec(40.4, 115.0)), module, LFSR16::SPLIT_PARAM));
 
-		addInput(createInputCentered<Inlet>(mm2px(Vec(5.4, 85.0)), module, LFSR16::GATE1_INPUT));
-		addInput(createInputCentered<Inlet>(mm2px(Vec(55.4, 85.0)), module, LFSR16::GATE2_INPUT));
-		addInput(createInputCentered<Inlet>(mm2px(Vec(25.4, 115.0)), module, LFSR16::GATE_INPUT));
+		addInput(createInputCentered<Inlet>(mm2px(Vec(5.4, 84.0)), module, LFSR16::GATE1_INPUT));
+		addInput(createInputCentered<Inlet>(mm2px(Vec(55.4, 84.0)), module, LFSR16::GATE2_INPUT));
 
 		addOutput(createOutputCentered<Outlet>(mm2px(Vec(15.4, 15.0)), module, LFSR16::CV0_OUTPUT));
 		addOutput(createOutputCentered<Outlet>(mm2px(Vec(25.4, 15.0)), module, LFSR16::CV1_OUTPUT));
@@ -279,6 +266,8 @@ struct LFSR16Widget : ModuleWidget {
 		addOutput(createOutputCentered<Outlet>(mm2px(Vec(55.4, 35.0)), module, LFSR16::G5_OUTPUT));
 		addOutput(createOutputCentered<Outlet>(mm2px(Vec(55.4, 45.0)), module, LFSR16::G6_OUTPUT));
 		addOutput(createOutputCentered<Outlet>(mm2px(Vec(55.4, 55.0)), module, LFSR16::G7_OUTPUT));
+		addOutput(createOutputCentered<Outlet>(mm2px(Vec(5.4, 114.0)), module, LFSR16::GATE1_OUT_OUTPUT));
+		addOutput(createOutputCentered<Outlet>(mm2px(Vec(55.4, 114.0)), module, LFSR16::GATE2_OUT_OUTPUT));
 
 		addChild(createLightCentered<TsLightSquareLarge<GreenRedLight>>(mm2px(Vec(15.4, 25.0)), module, LFSR16::X0_LIGHT));
 		addChild(createLightCentered<TsLightSquareLarge<GreenRedLight>>(mm2px(Vec(25.4, 25.0)), module, LFSR16::X1_LIGHT));
