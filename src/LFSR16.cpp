@@ -205,12 +205,10 @@ struct LFSR16 : Module {
 			triggered ^= true;
 		}
 
-
 		bool doOut = true;
 		if (inputs[GATE_INPUT].isConnected()) {
 			doOut = trigger.isHigh();
 		}
-
 
 		if (doOut) {
 			out();
