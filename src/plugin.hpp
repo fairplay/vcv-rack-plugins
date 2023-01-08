@@ -17,12 +17,14 @@ extern Model* modelLFSR16;
 struct Inlet : app::SvgPort {
 	Inlet() {
 		setSvg(Svg::load(asset::plugin(pluginInstance, "res/Inlet.svg")));
+		shadow->opacity = 0.05;
 	}
 };
 
 struct Outlet : app::SvgPort {
 	Outlet() {
 		setSvg(Svg::load(asset::plugin(pluginInstance, "res/Outlet.svg")));
+		shadow->opacity = 0.05;
 	}
 };
 
@@ -36,6 +38,7 @@ struct TsKnob : app::SvgKnob {
         bg = new widget::SvgWidget;
 		fb->addChildBelow(bg, tw);
 		speed = 2.f;
+		shadow->opacity = 0.05;
 	}
 };
 
@@ -62,7 +65,7 @@ struct TsKnobLarge : TsKnob {
 
 struct TsButton : app::SvgSwitch {
 	TsButton() {
-		shadow->opacity = 0.02;
+		shadow->opacity = 0.05;
 	}
 };
 

@@ -125,7 +125,7 @@ struct LFSR16 : Module {
 	int state1 = 1;
 	int state2 = 1;;
 	dsp::SchmittTrigger trigger1;
-	dsp::SchmittTrigger trigger2;	
+	dsp::SchmittTrigger trigger2;
 	int split = MAX_LENGTH;
 
 	void leds() {

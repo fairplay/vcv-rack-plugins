@@ -26,9 +26,9 @@ struct LogisticScratch : Module {
 	LogisticScratch() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 		configParam(FREQKNOB_PARAM, -54.f, 54.f, 0.f, "Frequency", " Hz", dsp::FREQ_SEMITONE, dsp::FREQ_C4);
-		configParam(L1KNOB_PARAM, 0.75f, 1.f, 0.75f, "", "λ1");
-		configParam(L2KNOB_PARAM, 0.75f, 1.f, 1.00f, "", "λ2");
-		configParam(DXKNOB_PARAM, 0.001f, 1.f, 0.001f, "Δx");
+		configParam(L1KNOB_PARAM, 0.f, 1.f, 0.f, "λ1", "", 0.f, 0.25f, 0.75f);
+		configParam(L2KNOB_PARAM, 0.f, 1.f, 1.f, "λ2", "", 0.f, 0.25f, 0.75f);
+		configParam(DXKNOB_PARAM, 0.001f, 1.f, 0.001f, "Δx", "");
 		configInput(FREQSOCKET_INPUT, "Frequency");
 		configInput(L1SOCKET_INPUT, "λ1");
 		configInput(L2SOCKET_INPUT, "λ2");
@@ -60,14 +60,19 @@ struct LogisticScratch : Module {
 		float dx = params[DXKNOB_PARAM].getValue();
 
 		if (inputs[L1SOCKET_INPUT].isConnected()) {
-			l1 = inputs[L1SOCKET_INPUT].getVoltage() * 0.1f * 0.25f + 0.75f;
+			l1 = inputs[L1SOCKET_INPUT].getVoltage();
+			l1 = clamp(l1, 0.f, 1.f);
 		}
 		if (inputs[L2SOCKET_INPUT].isConnected()) {
-			l2 = inputs[L2SOCKET_INPUT].getVoltage() * 0.1f * 0.25f + 0.75f;
+			l2 = inputs[L2SOCKET_INPUT].getVoltage();
+			l2 = clamp(l2, 0.f, 1.f);
 		}
 		if (inputs[DXSOCKET_INPUT].isConnected()) {
-			dx = inputs[DXSOCKET_INPUT].getVoltage() * 0.1f;
+			dx = clamp(inputs[DXSOCKET_INPUT].getVoltage(), 0.001f, 1.f);
 		}
+
+		l1 = l1 * 0.25f + 0.75f;
+		l2 = l2 * 0.25f + 0.75f;
 
 		if (l < 0.75f) {
 			l = l1;
