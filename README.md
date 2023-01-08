@@ -68,7 +68,7 @@ NB! Register may be emptied and sequence will be stuck. You can use `not` button
 
 ### Controls
 
-- White buttons are LFSR coefficients<sup>*</sup>.
+- White buttons are LFSR coefficients.
 - SPLIT: Split one register for two with the total length of 16 bits.
 - CLK<sup>1</sup>, CLK<sup>2</sup>: Triggers to run corresponding sequence.
 - NOT<sup>1</sup>, NOT<sup>2</sup>: Use `XNOR` instead of `XOR`.
