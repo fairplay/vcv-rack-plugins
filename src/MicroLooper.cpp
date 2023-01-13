@@ -35,7 +35,7 @@ struct MicroLooper : Module {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
 		configParam(RECBTN_PARAM, 0.f, 1.f, 0.f, "Recording");
 		configParam(LENGTHKNOB_PARAM, (float)MIN_BITS, (float)MAX_BITS, (float)MAX_BITS, "Length", "", 2.f, 1.f, 0.f);
-		configParam(SCANKNOB_PARAM, 0.f, 1.f, 1.f, "Chunk", "");
+		configParam(SCANKNOB_PARAM, 0.f, 1.f, 0.f, "Chunk", "");
 		configParam(SPEEDKNOB_PARAM, -5.f, 5.f, 1.f, "Speed", " samples");
 		configParam(WETKNOB_PARAM, 0.f, 1.f, 1.f, "Dry/Wet", "", 0.f, 100.f, 0.f);
 		configInput(RECSOCKET_INPUT, "Record");

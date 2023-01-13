@@ -12,6 +12,7 @@ extern Model* modelMicroLooper;
 extern Model* modelLogisticScratch;
 extern Model* modelLFSR8;
 extern Model* modelLFSR16;
+extern Model* modelDroplets;
 
 
 struct Inlet : app::SvgPort {
@@ -105,8 +106,17 @@ struct TsLightStd : TSvgLight<TBase> {
 };
 
 template <typename TBase>
-struct TsLightSquareLarge : RectangleLight<TSvgLight<TBase>> {
+struct TsLightSquareLarge : RectangleLight<TBase> {
 	TsLightSquareLarge() {
-		this->setSvg(Svg::load(asset::plugin(pluginInstance, "res/LightSquareLarge.svg")));
+		this->bgColor = SCHEME_BLACK;
+		this->box.size = mm2px(math::Vec(10.f, 10.f));
+	}
+};
+
+template <typename TBase>
+struct TsLightSquareRect : RectangleLight<TBase> {
+	TsLightSquareRect() {
+		this->bgColor = SCHEME_BLACK;
+		this->box.size = mm2px(math::Vec(6.f, 10.f));
 	}
 };

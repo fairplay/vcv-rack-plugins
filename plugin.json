@@ -47,6 +47,12 @@
       "tags": [
         "Sequencer"
       ]
+    },
+    {
+      "slug": "Droplets",
+      "name": "Droplets",
+      "description": "",
+      "tags": []
     }
   ]
 }

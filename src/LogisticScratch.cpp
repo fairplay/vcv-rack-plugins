@@ -28,7 +28,7 @@ struct LogisticScratch : Module {
 		configParam(FREQKNOB_PARAM, -54.f, 54.f, 0.f, "Frequency", " Hz", dsp::FREQ_SEMITONE, dsp::FREQ_C4);
 		configParam(L1KNOB_PARAM, 0.f, 1.f, 0.f, "λ1", "", 0.f, 0.25f, 0.75f);
 		configParam(L2KNOB_PARAM, 0.f, 1.f, 1.f, "λ2", "", 0.f, 0.25f, 0.75f);
-		configParam(DXKNOB_PARAM, 0.001f, 1.f, 0.001f, "Δx", "");
+		configParam(DXKNOB_PARAM, 0.001f, 1.f, 0.1f, "Δx", "");
 		configInput(FREQSOCKET_INPUT, "Frequency");
 		configInput(L1SOCKET_INPUT, "λ1");
 		configInput(L2SOCKET_INPUT, "λ2");
@@ -104,6 +104,12 @@ struct LogisticScratch : Module {
 		}
 
 		outputs[OUTSOCKET_OUTPUT].setVoltage(x * 10.f - 5.f);
+	}
+
+	void onReset(const ResetEvent& e) override {
+		x = 0.618f;
+		xn = 0.f;
+		l = 0.f;
 	}
 };
 

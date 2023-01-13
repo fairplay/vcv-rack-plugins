@@ -211,7 +211,7 @@ struct LFSR8Widget : ModuleWidget {
 		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(20.0, 95.0)), module, LFSR8::A7_PARAM));
 		addParam(createParamCentered<TsButtonStdPush>(mm2px(Vec(20.0, 105.0)), module, LFSR8::NOT_PARAM));
 
-		addParam(createParamCentered<TsKnobStd>(mm2px(Vec(10.0, 105.0)), module, LFSR8::LEN_PARAM));
+		addParam(createParamCentered<TsKnobStd>(mm2px(Vec(12.0, 105.0)), module, LFSR8::LEN_PARAM));
 
 		addParam(createParamCentered<TsKnobStd>(mm2px(Vec(50.0, 25.0)), module, LFSR8::CVO0_PARAM));
 		addParam(createParamCentered<TsKnobStd>(mm2px(Vec(50.0, 35.0)), module, LFSR8::CVO1_PARAM));
@@ -244,14 +244,14 @@ struct LFSR8Widget : ModuleWidget {
 		addOutput(createOutputCentered<Outlet>(mm2px(Vec(50.0, 85.0)), module, LFSR8::VO2_OUTPUT));
 		addOutput(createOutputCentered<Outlet>(mm2px(Vec(50.0, 95.0)), module, LFSR8::VO3_OUTPUT));
 
-		addChild(createLightCentered<TsLightStd<RedLight>>(mm2px(Vec(10.0, 25.0)), module, LFSR8::X0_LIGHT));
-		addChild(createLightCentered<TsLightStd<RedLight>>(mm2px(Vec(10.0, 35.0)), module, LFSR8::X1_LIGHT));
-		addChild(createLightCentered<TsLightStd<RedLight>>(mm2px(Vec(10.0, 45.0)), module, LFSR8::X2_LIGHT));
-		addChild(createLightCentered<TsLightStd<RedLight>>(mm2px(Vec(10.0, 55.0)), module, LFSR8::X3_LIGHT));
-		addChild(createLightCentered<TsLightStd<RedLight>>(mm2px(Vec(10.0, 65.0)), module, LFSR8::X4_LIGHT));
-		addChild(createLightCentered<TsLightStd<RedLight>>(mm2px(Vec(10.0, 75.0)), module, LFSR8::X5_LIGHT));
-		addChild(createLightCentered<TsLightStd<RedLight>>(mm2px(Vec(10.0, 85.0)), module, LFSR8::X6_LIGHT));
-		addChild(createLightCentered<TsLightStd<RedLight>>(mm2px(Vec(10.0, 95.0)), module, LFSR8::X7_LIGHT));
+		addChild(createLightCentered<TsLightSquareRect<RedLight>>(mm2px(Vec(12.0, 25.0)), module, LFSR8::X0_LIGHT));
+		addChild(createLightCentered<TsLightSquareRect<RedLight>>(mm2px(Vec(12.0, 35.0)), module, LFSR8::X1_LIGHT));
+		addChild(createLightCentered<TsLightSquareRect<RedLight>>(mm2px(Vec(12.0, 45.0)), module, LFSR8::X2_LIGHT));
+		addChild(createLightCentered<TsLightSquareRect<RedLight>>(mm2px(Vec(12.0, 55.0)), module, LFSR8::X3_LIGHT));
+		addChild(createLightCentered<TsLightSquareRect<RedLight>>(mm2px(Vec(12.0, 65.0)), module, LFSR8::X4_LIGHT));
+		addChild(createLightCentered<TsLightSquareRect<RedLight>>(mm2px(Vec(12.0, 75.0)), module, LFSR8::X5_LIGHT));
+		addChild(createLightCentered<TsLightSquareRect<RedLight>>(mm2px(Vec(12.0, 85.0)), module, LFSR8::X6_LIGHT));
+		addChild(createLightCentered<TsLightSquareRect<RedLight>>(mm2px(Vec(12.0, 95.0)), module, LFSR8::X7_LIGHT));
 	}
 };
 
