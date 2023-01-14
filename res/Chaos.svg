@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="40.639999mm"
+   height="128.5mm"
+   viewBox="0 0 40.639999 128.5"
+   version="1.1"
+   id="svg359"
+   inkscape:version="1.2.2 (b0a8486, 2022-12-01)"
+   sodipodi:docname="Chaos.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview361"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="false"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="false"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="true"
+     borderlayer="true"
+     shape-rendering="auto"
+     showguides="false"
+     inkscape:lockguides="true"
+     inkscape:zoom="4.2835116"
+     inkscape:cx="27.197312"
+     inkscape:cy="35.601631"
+     inkscape:window-width="1920"
+     inkscape:window-height="1019"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid480"
+       dotted="false"
+       spacingx="0.99999998"
+       spacingy="0.99999998"
+       originx="0"
+       originy="0"
+       units="mm"
+       empspacing="5"
+       snapvisiblegridlinesonly="false" />
+  </sodipodi:namedview>
+  <defs
+     id="defs356" />
+  <g
+     inkscape:label="panel"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#2e3440;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-linecap:round;stroke-miterlimit:0"
+       id="rect1088"
+       width="40.639999"
+       height="128.5"
+       x="5e-07"
+       y="4.9999989e-07" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-linecap:round;stroke-miterlimit:0"
+       id="rect1194"
+       width="40.639999"
+       height="85"
+       x="5.0799997e-07"
+       y="5.0000005" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="components"
+     style="display:none">
+    <circle
+       cx="8"
+       cy="13"
+       fill="#ff0000"
+       id="SpeedKnob"
+       style="display:inline;stroke-width:0.235186"
+       inkscape:label="SpeedKnob"
+       r="1.3229166mm" />
+  </g>
+</svg>

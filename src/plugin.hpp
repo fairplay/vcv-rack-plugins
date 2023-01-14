@@ -13,6 +13,7 @@ extern Model* modelLogisticScratch;
 extern Model* modelLFSR8;
 extern Model* modelLFSR16;
 extern Model* modelDroplets;
+extern Model* modelChaos;
 
 
 struct Inlet : app::SvgPort {

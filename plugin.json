@@ -53,6 +53,12 @@
       "name": "Droplets",
       "description": "",
       "tags": []
+    },
+    {
+      "slug": "Chaos",
+      "name": "Chaos",
+      "description": "",
+      "tags": []
     }
   ]
 }
