@@ -121,3 +121,40 @@ struct TsLightSquareRect : RectangleLight<TBase> {
 		this->box.size = mm2px(math::Vec(6.f, 10.f));
 	}
 };
+
+/* Flat Widgets */
+
+struct FlatKnob : app::SvgKnob {
+	widget::SvgWidget* bg;
+
+	FlatKnob() {
+		minAngle = -0.83 * M_PI;
+		maxAngle = 0.83 * M_PI;
+
+        bg = new widget::SvgWidget;
+		fb->addChildBelow(bg, tw);
+		speed = 2.f;
+		shadow->opacity = 0.f;
+	}
+};
+
+struct FlatKnobStd : FlatKnob {
+    FlatKnobStd() {
+		setSvg(Svg::load(asset::plugin(pluginInstance, "res/FlatKnobStd.svg")));
+        bg->setSvg(Svg::load(asset::plugin(pluginInstance, "res/FlatKnobStd_bg.svg")));
+    }
+};
+
+struct FlatButton : app::SvgSwitch {
+	FlatButton() {
+		shadow->opacity = 0.f;
+	}
+};
+
+struct FlatButtonStd : FlatButton {
+	FlatButtonStd() {
+		momentary = true;
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/FlatBtnStd_0.svg")));
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/FlatBtnStd_1.svg")));
+	}
+};

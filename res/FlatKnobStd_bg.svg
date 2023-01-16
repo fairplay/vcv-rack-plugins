@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="10mm"
+   height="10mm"
+   viewBox="0 0 10 10"
+   version="1.1"
+   id="svg257"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="FlatKnobStd_bg.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview259"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="21.60853"
+     inkscape:cx="4.9054702"
+     inkscape:cy="18.23354"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs254" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0;stroke-dasharray:none"
+       id="rect5724"
+       width="9.9999971"
+       height="9.9999971"
+       x="1.7007924e-06"
+       y="1.7007924e-06" />
+    <path
+       style="fill:#000000;fill-opacity:0;stroke:#7755ee;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       id="path5948"
+       sodipodi:type="arc"
+       sodipodi:cx="5"
+       sodipodi:cy="4.9790034"
+       sodipodi:rx="4.7497272"
+       sodipodi:ry="4.7290034"
+       sodipodi:start="1.8430677"
+       sodipodi:end="1.298525"
+       sodipodi:open="true"
+       sodipodi:arc-type="arc"
+       d="M 3.7227042,9.5338025 A 4.7497272,4.7290034 0 0 1 0.294218,4.3372039 4.7497272,4.7290034 0 0 1 5,0.25 4.7497272,4.7290034 0 0 1 9.705782,4.3372042 4.7497272,4.7290034 0 0 1 6.2772956,9.5338026" />
+  </g>
+</svg>

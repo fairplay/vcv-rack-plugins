@@ -1,0 +1,50 @@
+#include "plugin.hpp"
+
+
+struct Chaos : Module {
+	enum ParamId {
+		R_PARAM,
+		THRESH_PARAM,
+		RESET_PARAM,
+		PARAMS_LEN
+	};
+	enum InputId {
+		INPUTS_LEN
+	};
+	enum OutputId {
+		OUTPUTS_LEN
+	};
+	enum LightId {
+		LIGHTS_LEN
+	};
+
+	Chaos() {
+		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
+		configParam(R_PARAM, 0.f, 1.f, 0.f, "");
+		configParam(THRESH_PARAM, 0.f, 1.f, 0.f, "");
+		configParam(RESET_PARAM, 0.f, 1.f, 0.f, "");
+	}
+
+	void process(const ProcessArgs& args) override {
+	}
+};
+
+
+struct ChaosWidget : ModuleWidget {
+	ChaosWidget(Chaos* module) {
+		setModule(module);
+		setPanel(createPanel(asset::plugin(pluginInstance, "res/Chaos.svg")));
+
+		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+
+		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(8.0, 20.0)), module, Chaos::R_PARAM));
+		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(8.0, 40.0)), module, Chaos::THRESH_PARAM));
+		addParam(createParamCentered<RoundBlackKnob>(mm2px(Vec(8.0, 60.0)), module, Chaos::RESET_PARAM));
+	}
+};
+
+
+Model* modelChaos = createModel<Chaos, ChaosWidget>("Chaos");
