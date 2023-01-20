@@ -59,6 +59,12 @@
       "name": "Chaos",
       "description": "",
       "tags": []
+    },
+    {
+      "slug": "muLooper",
+      "name": "muLooper",
+      "description": "",
+      "tags": []
     }
   ]
 }

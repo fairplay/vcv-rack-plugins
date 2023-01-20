@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="6mm"
-   height="6mm"
-   viewBox="0 0 6 6"
+   width="10mm"
+   height="10mm"
+   viewBox="0 0 10 10"
    version="1.1"
    id="svg827"
    inkscape:version="1.2.2 (b0a8486, 2022-12-01)"
-   sodipodi:docname="Outlet.svg"
+   sodipodi:docname="FlatBtnStd_0.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -20,14 +20,14 @@
      borderopacity="1.0"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
+     inkscape:pagecheckerboard="true"
      inkscape:document-units="mm"
      showgrid="true"
      showborder="true"
      inkscape:showpageshadow="false"
-     inkscape:zoom="28.963094"
-     inkscape:cx="7.2333432"
-     inkscape:cy="9.8573723"
+     inkscape:zoom="14.481547"
+     inkscape:cx="10.150849"
+     inkscape:cy="20.681492"
      inkscape:window-width="1920"
      inkscape:window-height="1019"
      inkscape:window-x="0"
@@ -43,7 +43,9 @@
        spacingx="0.99999997"
        spacingy="0.99999997"
        visible="true"
-       enabled="true" />
+       enabled="true"
+       originx="0"
+       originy="0" />
   </sodipodi:namedview>
   <defs
      id="defs824" />
@@ -51,18 +53,17 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <ellipse
-       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.100042;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path920"
-       cx="3"
-       cy="3.0000002"
-       rx="2.9499786"
-       ry="2.9499788" />
     <circle
-       style="display:inline;fill:#000000;fill-opacity:1;stroke:#fbfbfb;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="path1159"
-       cx="3"
-       cy="3"
-       r="1.9999995" />
+       style="fill:#ffffff;stroke:#f50963;stroke-width:0.5;stroke-linecap:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;fill-opacity:0"
+       id="path1680"
+       cx="5"
+       cy="5"
+       r="3.75" />
+    <circle
+       style="fill:#f50963;stroke:#f50963;stroke-width:0.0;stroke-linecap:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
+       id="path1681"
+       cx="5"
+       cy="5"
+       r="2.75" />
   </g>
 </svg>

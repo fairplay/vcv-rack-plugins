@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="10mm"
-   height="10mm"
-   viewBox="0 0 10 10"
+   width="4mm"
+   height="4mm"
+   viewBox="0 0 4 4"
    version="1.1"
    id="svg827"
-   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
-   sodipodi:docname="FlatBtnStd_0.svg"
+   inkscape:version="1.2.2 (b0a8486, 2022-12-01)"
+   sodipodi:docname="FlatBtnStd_1.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -26,12 +26,12 @@
      showborder="true"
      inkscape:showpageshadow="false"
      inkscape:zoom="14.481547"
-     inkscape:cx="-10.634223"
-     inkscape:cy="20.094538"
+     inkscape:cx="15.813228"
+     inkscape:cy="20.888652"
      inkscape:window-width="1920"
-     inkscape:window-height="1009"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:window-height="1019"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      inkscape:deskcolor="#d1d1d1">
@@ -54,13 +54,22 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill-opacity:0;stroke:#f0aa50;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#ffffff;fill-opacity:0;stroke:#f50963;stroke-width:0.25;stroke-dasharray:none;stroke-opacity:1"
        id="rect768"
-       width="9.5"
-       height="9.5"
-       x="0.25"
-       y="0.25"
-       rx="1.0575532"
-       ry="1.0575532" />
+       width="2"
+       height="2"
+       x="1"
+       y="1"
+       rx="1"
+       ry="1" />
+    <rect
+       style="fill:#f50963;fill-opacity:1;stroke:#00ffff;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
+       id="rect7066"
+       width="1"
+       height="1"
+       x="1.5"
+       y="1.5"
+       ry="1"
+       rx="1" />
   </g>
 </svg>

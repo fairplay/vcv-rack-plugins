@@ -14,19 +14,20 @@ extern Model* modelLFSR8;
 extern Model* modelLFSR16;
 extern Model* modelDroplets;
 extern Model* modelChaos;
+extern Model* modelMuLooper;
 
 
 struct Inlet : app::SvgPort {
 	Inlet() {
 		setSvg(Svg::load(asset::plugin(pluginInstance, "res/Inlet.svg")));
-		shadow->opacity = 0.05;
+		shadow->opacity = 0.0;
 	}
 };
 
 struct Outlet : app::SvgPort {
 	Outlet() {
 		setSvg(Svg::load(asset::plugin(pluginInstance, "res/Outlet.svg")));
-		shadow->opacity = 0.05;
+		shadow->opacity = 0.0;
 	}
 };
 
@@ -133,15 +134,15 @@ struct FlatKnob : app::SvgKnob {
 
         bg = new widget::SvgWidget;
 		fb->addChildBelow(bg, tw);
-		speed = 2.f;
+		speed = 4.f;
 		shadow->opacity = 0.f;
 	}
 };
 
 struct FlatKnobStd : FlatKnob {
     FlatKnobStd() {
-		setSvg(Svg::load(asset::plugin(pluginInstance, "res/FlatKnobStd.svg")));
-        bg->setSvg(Svg::load(asset::plugin(pluginInstance, "res/FlatKnobStd_bg.svg")));
+		setSvg(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatKnobStd.svg")));
+        bg->setSvg(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatKnobStd_bg.svg")));
     }
 };
 
@@ -154,7 +155,49 @@ struct FlatButton : app::SvgSwitch {
 struct FlatButtonStd : FlatButton {
 	FlatButtonStd() {
 		momentary = true;
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/FlatBtnStd_0.svg")));
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/FlatBtnStd_1.svg")));
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatBtnStd_0.svg")));
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatBtnStd_1.svg")));
 	}
+};
+
+struct FlatButtonStdPush : FlatButtonStd {
+	FlatButtonStdPush() {
+		momentary = false;
+	}
+};
+
+
+struct FlatButtonSmall : FlatButton {
+	FlatButtonSmall() {
+		momentary = true;
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatBtnSmall_0.svg")));
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatBtnSmall_1.svg")));
+	}
+};
+
+struct FlatButtonTiny : FlatButton {
+	FlatButtonTiny() {
+		momentary = false;
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatBtnTiny_0.svg")));
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatBtnTiny_1.svg")));
+	}
+};
+
+
+template <typename TBase = GrayModuleLightWidget>
+struct TRedIndicatorLight : TBase {
+	TRedIndicatorLight() {
+		this->addBaseColor(nvgRGB(0x88, 0x88, 0x88));
+	}
+};
+using RedIndicatorLight = TRedIndicatorLight<>;
+
+template <typename TBase>
+struct FlatLightSquare : RectangleLight<TBase> {
+	FlatLightSquare() {
+		this->bgColor = SCHEME_BLACK;
+		this->box.size = mm2px(math::Vec(1.25f, 1.25f));
+	}
+
+	void drawHalo(const widget::Widget::DrawArgs& args) override {}
 };
