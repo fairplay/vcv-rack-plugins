@@ -65,6 +65,12 @@
       "name": "muLooper",
       "description": "",
       "tags": []
+    },
+    {
+      "slug": "LFSR16p",
+      "name": "LFSR16p",
+      "description": "",
+      "tags": []
     }
   ]
 }

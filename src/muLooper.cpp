@@ -104,10 +104,14 @@ struct MuLooper : Module {
 		float speed = params[SPD_PARAM].getValue();
 		if (inputs[SPD_INPUT].isConnected()) {
 			speed = (speed + 5.f) * (inputs[SPD_INPUT].getVoltage() - 5.0f) / 10.f;
-
 		}
 
 		int lengthRaw = (int)params[LEN_PARAM].getValue();
+
+		if (inputs[LEN_INPUT].isConnected()) {
+			lengthRaw = (int)(inputs[LEN_INPUT].getVoltage() / 10.f * ((float)MAX_BITS - (float)MIN_BITS) + (float)MIN_BITS);
+		}
+
 		int length = 1 << (lengthRaw - 1);
 		if (length0 != length) {
 			playPosition = 0;
@@ -118,7 +122,7 @@ struct MuLooper : Module {
 		outputs[POLY_OUTPUT].setChannels(channels);
 		for (int i = 0; i < PORT_MAX_CHANNELS; i++) {
 			lights[CH_LED_0_LIGHT + i].setBrightness(
-				i < channels ? 0.f : 0.5f
+				i >= channels ? 0.1f : 1.0f
 			);
 		}
 
@@ -178,7 +182,7 @@ struct MuLooper : Module {
 			recordBuffer[recordPosition++] = signal + currentSample * fbk;
 
 			float lightNumber = (float)(REC_LED_7_LIGHT - REC_LED_0_LIGHT + 1) * (float)recordPosition / (float)MAX_LENGTH;
-			lights[REC_LED_0_LIGHT + lightNumber].setBrightness(0.5f * (lightNumber - (int)lightNumber));
+			lights[REC_LED_0_LIGHT + lightNumber].setBrightness(lightNumber - (int)lightNumber);
 
 			if (recordPosition >= MAX_LENGTH) {
 				for (int i = 0; i < MAX_LENGTH; i++) {
@@ -215,7 +219,7 @@ struct MuLooperWidget : ModuleWidget {
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(14.0, 83.0)), module, MuLooper::FBK_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(33.0, 83.0)), module, MuLooper::WET_PARAM));
 
-		addInput(createInputCentered<Inlet>(mm2px(Vec(7.0, 109.0)), module, MuLooper::IN_INPUT));
+		addInput(createInputCentered<Inlet>(mm2px(Vec(7.0, 99.0)), module, MuLooper::IN_INPUT));
 		addInput(createInputCentered<Inlet>(mm2px(Vec(7.0, 16.0)), module, MuLooper::REC_INPUT));
 		addInput(createInputCentered<Inlet>(mm2px(Vec(7.0, 36.0)), module, MuLooper::LEN_INPUT));
 		addInput(createInputCentered<Inlet>(mm2px(Vec(7.0, 56.0)), module, MuLooper::SCN_INPUT));
@@ -223,33 +227,33 @@ struct MuLooperWidget : ModuleWidget {
 		addInput(createInputCentered<Inlet>(mm2px(Vec(26.0, 56.0)), module, MuLooper::SPD_INPUT));
 		addInput(createInputCentered<Inlet>(mm2px(Vec(26.0, 76.0)), module, MuLooper::WET_INPUT));
 
-		addOutput(createOutputCentered<Outlet>(mm2px(Vec(20.82, 109.0)), module, MuLooper::MONO_OUTPUT));
-		addOutput(createOutputCentered<Outlet>(mm2px(Vec(34.64, 109.0)), module, MuLooper::POLY_OUTPUT));
+		addOutput(createOutputCentered<Outlet>(mm2px(Vec(21.0, 99.0)), module, MuLooper::MONO_OUTPUT));
+		addOutput(createOutputCentered<Outlet>(mm2px(Vec(35.0, 99.0)), module, MuLooper::POLY_OUTPUT));
 
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(21.0, 23.0)), module, MuLooper::REC_LED_0_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(23.0, 23.0)), module, MuLooper::REC_LED_1_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(25.0, 23.0)), module, MuLooper::REC_LED_2_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(27.0, 23.0)), module, MuLooper::REC_LED_3_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(29.0, 23.0)), module, MuLooper::REC_LED_4_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(31.0, 23.0)), module, MuLooper::REC_LED_5_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(33.0, 23.0)), module, MuLooper::REC_LED_6_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(35.0, 23.0)), module, MuLooper::REC_LED_7_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(29.0, 40.0)), module, MuLooper::CH_LED_0_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(31.0, 40.0)), module, MuLooper::CH_LED_1_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(33.0, 40.0)), module, MuLooper::CH_LED_2_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(35.0, 40.0)), module, MuLooper::CH_LED_3_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(29.0, 42.0)), module, MuLooper::CH_LED_4_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(31.0, 42.0)), module, MuLooper::CH_LED_5_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(33.0, 42.0)), module, MuLooper::CH_LED_6_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(35.0, 42.0)), module, MuLooper::CH_LED_7_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(29.0, 44.0)), module, MuLooper::CH_LED_8_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(31.0, 44.0)), module, MuLooper::CH_LED_9_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(33.0, 44.0)), module, MuLooper::CH_LED_10_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(35.0, 44.0)), module, MuLooper::CH_LED_11_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(29.0, 46.0)), module, MuLooper::CH_LED_12_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(31.0, 46.0)), module, MuLooper::CH_LED_13_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(33.0, 46.0)), module, MuLooper::CH_LED_14_LIGHT));
-		addChild(createLightCentered<FlatLightSquare<WhiteLight>>(mm2px(Vec(35.0, 46.0)), module, MuLooper::CH_LED_15_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(21.0, 23.0)), module, MuLooper::REC_LED_0_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(23.0, 23.0)), module, MuLooper::REC_LED_1_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(25.0, 23.0)), module, MuLooper::REC_LED_2_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(27.0, 23.0)), module, MuLooper::REC_LED_3_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(29.0, 23.0)), module, MuLooper::REC_LED_4_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(31.0, 23.0)), module, MuLooper::REC_LED_5_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(33.0, 23.0)), module, MuLooper::REC_LED_6_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(35.0, 23.0)), module, MuLooper::REC_LED_7_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(29.0, 40.0)), module, MuLooper::CH_LED_0_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(31.0, 40.0)), module, MuLooper::CH_LED_1_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(33.0, 40.0)), module, MuLooper::CH_LED_2_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(35.0, 40.0)), module, MuLooper::CH_LED_3_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(29.0, 42.0)), module, MuLooper::CH_LED_4_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(31.0, 42.0)), module, MuLooper::CH_LED_5_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(33.0, 42.0)), module, MuLooper::CH_LED_6_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(35.0, 42.0)), module, MuLooper::CH_LED_7_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(29.0, 44.0)), module, MuLooper::CH_LED_8_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(31.0, 44.0)), module, MuLooper::CH_LED_9_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(33.0, 44.0)), module, MuLooper::CH_LED_10_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(35.0, 44.0)), module, MuLooper::CH_LED_11_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(29.0, 46.0)), module, MuLooper::CH_LED_12_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(31.0, 46.0)), module, MuLooper::CH_LED_13_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(33.0, 46.0)), module, MuLooper::CH_LED_14_LIGHT));
+		addChild(createLightCentered<FlatLightSquare<GrayIndicatorLight>>(mm2px(Vec(35.0, 46.0)), module, MuLooper::CH_LED_15_LIGHT));
 	}
 };
 

@@ -100,7 +100,7 @@ struct Droplets : Module {
 			flow = clamp(flow, 0.f, 1.f);
 		}
 
-		float leakVelocity = 0.f;
+		//float leakVelocity = 0.f;
 
 		for (int i = 0; i < 8; i++) {
 			float velocity = getVelocity(i);
@@ -108,7 +108,7 @@ struct Droplets : Module {
 			if (i > 0) {
 				state[i - 1] += velocity;
 			} else {
-				leakVelocity = velocity;
+				//leakVelocity = velocity;
 			}
 
 		}

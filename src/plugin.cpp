@@ -10,6 +10,7 @@ void init(Plugin* p) {
 	p->addModel(modelLogisticScratch);
 	p->addModel(modelLFSR8);
 	p->addModel(modelLFSR16);
+	p->addModel(modelLFSR16p);
 	p->addModel(modelDroplets);
 	p->addModel(modelChaos);
 	p->addModel(modelMuLooper);

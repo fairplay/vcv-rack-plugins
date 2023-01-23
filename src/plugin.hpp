@@ -12,6 +12,7 @@ extern Model* modelMicroLooper;
 extern Model* modelLogisticScratch;
 extern Model* modelLFSR8;
 extern Model* modelLFSR16;
+extern Model* modelLFSR16p;
 extern Model* modelDroplets;
 extern Model* modelChaos;
 extern Model* modelMuLooper;
@@ -184,20 +185,39 @@ struct FlatButtonTiny : FlatButton {
 };
 
 
-template <typename TBase = GrayModuleLightWidget>
-struct TRedIndicatorLight : TBase {
-	TRedIndicatorLight() {
-		this->addBaseColor(nvgRGB(0x88, 0x88, 0x88));
+template <typename TBase = ModuleLightWidget>
+struct TGrayIndicatorLight : TBase {
+	TGrayIndicatorLight() {
+		this->borderColor = nvgRGBA(0xb6, 0xb6, 0xb6, 0xff);
+		this->bgColor = nvgRGBA(0xb6, 0xb6, 0xb6, 0xff);
+		this->addBaseColor(SCHEME_WHITE);
 	}
 };
-using RedIndicatorLight = TRedIndicatorLight<>;
+using GrayIndicatorLight = TGrayIndicatorLight<>;
+
+template <typename TBase = ModuleLightWidget>
+struct TBlackWhiteLight : TBase {
+	TBlackWhiteLight() {
+		//this->borderColor = nvgRGBA(0xb6, 0xb6, 0xb6, 0xff);
+		//this->bgColor = nvgRGBA(0xb6, 0xb6, 0xb6, 0xff);
+		this->addBaseColor(SCHEME_DARK_GRAY);
+		this->addBaseColor(SCHEME_WHITE);
+	}
+};
+using BlackWhiteLight = TBlackWhiteLight<>;
 
 template <typename TBase>
 struct FlatLightSquare : RectangleLight<TBase> {
 	FlatLightSquare() {
-		this->bgColor = SCHEME_BLACK;
-		this->box.size = mm2px(math::Vec(1.25f, 1.25f));
+		this->box.size = mm2px(math::Vec(1.5f, 1.5f));
 	}
+	void drawHalo(const widget::Widget::DrawArgs& args) override {}
+};
 
+template <typename TBase>
+struct FlatLightSquareStd : RectangleLight<TBase> {
+	FlatLightSquareStd() {
+		this->box.size = mm2px(math::Vec(6.f, 6.f));
+	}
 	void drawHalo(const widget::Widget::DrawArgs& args) override {}
 };
