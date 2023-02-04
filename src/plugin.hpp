@@ -8,14 +8,13 @@ using namespace rack;
 extern Plugin* pluginInstance;
 
 // Declare each Model, defined in each module source file
-extern Model* modelMicroLooper;
 extern Model* modelLogisticScratch;
-extern Model* modelLFSR8;
-extern Model* modelLFSR16;
-extern Model* modelLFSR16p;
+extern Model* modelLFSR8Poly;
+extern Model* modelLFSR16Poly;
 extern Model* modelDroplets;
-extern Model* modelChaos;
+extern Model* modelChaosMaps;
 extern Model* modelMuLooper;
+extern Model* modelPluck;
 
 
 struct Inlet : app::SvgPort {
@@ -32,99 +31,12 @@ struct Outlet : app::SvgPort {
 	}
 };
 
-struct TsKnob : app::SvgKnob {
-	widget::SvgWidget* bg;
-
-	TsKnob() {
-		minAngle = -0.83 * M_PI;
-		maxAngle = 0.83 * M_PI;
-
-        bg = new widget::SvgWidget;
-		fb->addChildBelow(bg, tw);
-		speed = 2.f;
-		shadow->opacity = 0.05;
+struct PolyOutlet : app::SvgPort {
+	PolyOutlet() {
+		setSvg(Svg::load(asset::plugin(pluginInstance, "res/PolyOutlet.svg")));
+		shadow->opacity = 0.0;
 	}
 };
-
-struct TsKnobStd : TsKnob {
-    TsKnobStd() {
-		setSvg(Svg::load(asset::plugin(pluginInstance, "res/KnobStd.svg")));
-        bg->setSvg(Svg::load(asset::plugin(pluginInstance, "res/KnobStd_bg.svg")));
-    }
-};
-
-struct TsKnobBig : TsKnob {
-    TsKnobBig() {
-		setSvg(Svg::load(asset::plugin(pluginInstance, "res/KnobBig.svg")));
-        bg->setSvg(Svg::load(asset::plugin(pluginInstance, "res/KnobBig_bg.svg")));
-    }
-};
-
-struct TsKnobLarge : TsKnob {
-    TsKnobLarge() {
-		setSvg(Svg::load(asset::plugin(pluginInstance, "res/KnobLarge.svg")));
-        bg->setSvg(Svg::load(asset::plugin(pluginInstance, "res/KnobLarge_bg.svg")));
-    }
-};
-
-struct TsButton : app::SvgSwitch {
-	TsButton() {
-		shadow->opacity = 0.05;
-	}
-};
-
-struct TsButtonLarge : TsButton {
-	TsButtonLarge() {
-		momentary = true;
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnBig_0.svg")));
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnBig_1_red.svg")));
-	}
-};
-
-struct TsButtonLargePush : TsButtonLarge {
-	TsButtonLargePush() {
-		momentary = false;
-	}
-};
-
-struct TsButtonStd : TsButton {
-	TsButtonStd() {
-		momentary = true;
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnStd_0.svg")));
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/BtnStd_1_red.svg")));
-	}
-};
-
-struct TsButtonStdPush : TsButtonStd {
-	TsButtonStdPush() {
-		momentary = false;
-	}
-};
-
-template <typename TBase>
-struct TsLightStd : TSvgLight<TBase> {
-	TsLightStd() {
-		this->setSvg(Svg::load(asset::plugin(pluginInstance, "res/LightStd.svg")));
-	}
-};
-
-template <typename TBase>
-struct TsLightSquareLarge : RectangleLight<TBase> {
-	TsLightSquareLarge() {
-		this->bgColor = SCHEME_BLACK;
-		this->box.size = mm2px(math::Vec(10.f, 10.f));
-	}
-};
-
-template <typename TBase>
-struct TsLightSquareRect : RectangleLight<TBase> {
-	TsLightSquareRect() {
-		this->bgColor = SCHEME_BLACK;
-		this->box.size = mm2px(math::Vec(6.f, 10.f));
-	}
-};
-
-/* Flat Widgets */
 
 struct FlatKnob : app::SvgKnob {
 	widget::SvgWidget* bg;
@@ -135,15 +47,29 @@ struct FlatKnob : app::SvgKnob {
 
         bg = new widget::SvgWidget;
 		fb->addChildBelow(bg, tw);
-		speed = 4.f;
+		speed = 2.f;
 		shadow->opacity = 0.f;
 	}
+};
+
+struct FlatKnobMod : FlatKnob {
+    FlatKnobMod() {
+		setSvg(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatCtrlKnobStd.svg")));
+        bg->setSvg(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatCtrlKnobStd_bg.svg")));
+    }
 };
 
 struct FlatKnobStd : FlatKnob {
     FlatKnobStd() {
 		setSvg(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatKnobStd.svg")));
         bg->setSvg(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatKnobStd_bg.svg")));
+    }
+};
+
+struct FlatKnobSmall : FlatKnob {
+    FlatKnobSmall() {
+		setSvg(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatKnobSmall.svg")));
+        bg->setSvg(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatKnobSmall_bg.svg")));
     }
 };
 
@@ -161,63 +87,123 @@ struct FlatButtonStd : FlatButton {
 	}
 };
 
+struct FlatButtonStdLatch : FlatButtonStd {
+	FlatButtonStdLatch() {
+		momentary = false;
+		latch = true;
+	}
+};
+
 struct FlatButtonStdPush : FlatButtonStd {
 	FlatButtonStdPush() {
 		momentary = false;
 	}
 };
 
-
-struct FlatButtonSmall : FlatButton {
-	FlatButtonSmall() {
-		momentary = true;
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatBtnSmall_0.svg")));
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatBtnSmall_1.svg")));
-	}
-};
-
 struct FlatButtonTiny : FlatButton {
 	FlatButtonTiny() {
-		momentary = false;
+		momentary = true;
 		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatBtnTiny_0.svg")));
 		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatBtnTiny_1.svg")));
 	}
 };
 
-
-template <typename TBase = ModuleLightWidget>
-struct TGrayIndicatorLight : TBase {
-	TGrayIndicatorLight() {
-		this->borderColor = nvgRGBA(0xb6, 0xb6, 0xb6, 0xff);
-		this->bgColor = nvgRGBA(0xb6, 0xb6, 0xb6, 0xff);
-		this->addBaseColor(SCHEME_WHITE);
+struct FlatButtonTinyPush : FlatButtonTiny {
+	FlatButtonTinyPush() {
+		momentary = false;
 	}
 };
-using GrayIndicatorLight = TGrayIndicatorLight<>;
+
+struct FlatSwitch : FlatButton {
+	FlatSwitch() {
+		momentary = false;
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatSwitch_0.svg")));
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatSwitch_1.svg")));
+	}
+};
 
 template <typename TBase = ModuleLightWidget>
 struct TBlackWhiteLight : TBase {
 	TBlackWhiteLight() {
-		//this->borderColor = nvgRGBA(0xb6, 0xb6, 0xb6, 0xff);
-		//this->bgColor = nvgRGBA(0xb6, 0xb6, 0xb6, 0xff);
-		this->addBaseColor(SCHEME_DARK_GRAY);
+		this->borderColor = nvgRGBA(0x00, 0x00, 0x00, 0x00);
+		this->bgColor = SCHEME_BLACK;
 		this->addBaseColor(SCHEME_WHITE);
 	}
 };
 using BlackWhiteLight = TBlackWhiteLight<>;
 
 template <typename TBase>
-struct FlatLightSquare : RectangleLight<TBase> {
-	FlatLightSquare() {
-		this->box.size = mm2px(math::Vec(1.5f, 1.5f));
+struct FlatLight : RectangleLight<TBase> {
+	void drawLayer(const widget::Widget::DrawArgs& args, int layer) override {
+		if (layer == 1) {
+			// Use the formula `lightColor * (1 - dest) + dest` for blending
+			nvgGlobalCompositeBlendFunc(args.vg, NVG_ONE_MINUS_DST_COLOR, NVG_ONE);
+			this->drawLight(args);
+		}
+
+		Widget::drawLayer(args, layer);
 	}
-	void drawHalo(const widget::Widget::DrawArgs& args) override {}
 };
 
 template <typename TBase>
-struct FlatLightSquareStd : RectangleLight<TBase> {
-	FlatLightSquareStd() {
-		this->box.size = mm2px(math::Vec(6.f, 6.f));
+struct FlatLightSquare : FlatLight<TBase> {
+	FlatLightSquare() {
+		this->box.size = mm2px(math::Vec(1.5f, 1.5f));
 	}
-	void drawHalo(const widget::Widget::DrawArgs& args) override {}
+};
+
+template <typename TBase>
+struct FlatLightSquareStd : FlatLight<TBase> {
+	FlatLightSquareStd() {
+		this->box.size = mm2px(math::Vec(3.5f, 3.5f));
+	}
+};
+
+template <class TModule>
+struct FlatDisplay : widget::Widget {
+	TModule * module;
+	std::vector<std::string> text = {};
+	std::shared_ptr<Font> font;
+	int fontSize = 9;
+
+	FlatDisplay() {
+		std::string fontPath = asset::plugin(pluginInstance, "res/fonts/MonoBold.ttf");
+		font = APP->window->loadFont(fontPath);
+	}
+
+	void step() override {
+		if (!module) {
+			return;
+		}
+		text = module->text;
+	}
+
+	void draw(const DrawArgs& args) override {
+		if (!font) {
+			return;
+		}
+
+		nvgSave(args.vg);
+		math::Rect r = box.zeroPos().shrink(mm2px(math::Vec(1, 0)));;
+		nvgBeginPath(args.vg);
+		nvgRect(args.vg, RECT_ARGS(r));
+		nvgFillColor(args.vg, nvgRGBA(0x00, 0x00, 0x00, 0xff));
+		nvgFill(args.vg);
+		nvgStrokeColor(args.vg, nvgRGBA(0xff, 0xff, 0xff, 0x80));
+		nvgStrokeWidth(args.vg, 0.5);
+		nvgStroke(args.vg);
+
+		nvgFontFaceId(args.vg, font->handle);
+		nvgTextLetterSpacing(args.vg, 0.0);
+		nvgTextAlign(args.vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
+		nvgFillColor(args.vg, SCHEME_WHITE);
+		nvgFontSize(args.vg, fontSize);
+
+		int i = 0;
+		for (std::string str : text) {
+			nvgText(args.vg, mm2px(2.0), mm2px(2.0) + i * (fontSize + 2), str.c_str(), NULL);
+			i += 1;
+		}
+		nvgRestore(args.vg);
+	}
 };

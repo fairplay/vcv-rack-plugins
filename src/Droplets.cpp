@@ -143,8 +143,8 @@ struct DropletsWidget : ModuleWidget {
 		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-		addParam(createParamCentered<TsKnobLarge>(mm2px(Vec(28.0, 42.0)), module, Droplets::FLOW_PARAM));
-		addParam(createParamCentered<TsKnobLarge>(mm2px(Vec(28.0, 72.0)), module, Droplets::VISCOSITY_PARAM));
+		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(28.0, 42.0)), module, Droplets::FLOW_PARAM));
+		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(28.0, 72.0)), module, Droplets::VISCOSITY_PARAM));
 
 		addInput(createInputCentered<Inlet>(mm2px(Vec(7.5, 15.0)), module, Droplets::GATE_INPUT));
 		addInput(createInputCentered<Inlet>(mm2px(Vec(21.0, 35.0)), module, Droplets::FLOW_INPUT));
@@ -153,13 +153,13 @@ struct DropletsWidget : ModuleWidget {
 		addOutput(createOutputCentered<Outlet>(mm2px(Vec(35.08, 90.0)), module, Droplets::DROP_OUTPUT));
 		addOutput(createOutputCentered<Outlet>(mm2px(Vec(35.08, 100.0)), module, Droplets::CV_VELOCITY_OUTPUT));
 
-		addChild(createLightCentered<TsLightSquareLarge<BlueLight>>(mm2px(Vec(7.5, 35.0)), module, Droplets::L6_LIGHT));
-		addChild(createLightCentered<TsLightSquareLarge<BlueLight>>(mm2px(Vec(7.5, 45.0)), module, Droplets::L5_LIGHT));
-		addChild(createLightCentered<TsLightSquareLarge<BlueLight>>(mm2px(Vec(7.5, 55.0)), module, Droplets::L4_LIGHT));
-		addChild(createLightCentered<TsLightSquareLarge<BlueLight>>(mm2px(Vec(7.5, 65.0)), module, Droplets::L3_LIGHT));
-		addChild(createLightCentered<TsLightSquareLarge<BlueLight>>(mm2px(Vec(7.5, 75.0)), module, Droplets::L2_LIGHT));
-		addChild(createLightCentered<TsLightSquareLarge<BlueLight>>(mm2px(Vec(7.5, 85.0)), module, Droplets::L1_LIGHT));
-		addChild(createLightCentered<TsLightSquareLarge<BlueLight>>(mm2px(Vec(7.5, 95.0)), module, Droplets::L0_LIGHT));
+		addChild(createLightCentered<FlatLightSquareStd<BlueLight>>(mm2px(Vec(7.5, 35.0)), module, Droplets::L6_LIGHT));
+		addChild(createLightCentered<FlatLightSquareStd<BlueLight>>(mm2px(Vec(7.5, 45.0)), module, Droplets::L5_LIGHT));
+		addChild(createLightCentered<FlatLightSquareStd<BlueLight>>(mm2px(Vec(7.5, 55.0)), module, Droplets::L4_LIGHT));
+		addChild(createLightCentered<FlatLightSquareStd<BlueLight>>(mm2px(Vec(7.5, 65.0)), module, Droplets::L3_LIGHT));
+		addChild(createLightCentered<FlatLightSquareStd<BlueLight>>(mm2px(Vec(7.5, 75.0)), module, Droplets::L2_LIGHT));
+		addChild(createLightCentered<FlatLightSquareStd<BlueLight>>(mm2px(Vec(7.5, 85.0)), module, Droplets::L1_LIGHT));
+		addChild(createLightCentered<FlatLightSquareStd<BlueLight>>(mm2px(Vec(7.5, 95.0)), module, Droplets::L0_LIGHT));
 	}
 };
 
