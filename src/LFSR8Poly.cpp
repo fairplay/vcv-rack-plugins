@@ -85,34 +85,32 @@ struct LFSR8Poly : Module {
 		configInput(LEN_INPUT, "Sequence length");
 		configInput(NOT_INPUT, "XNOR sequence");
 		configInput(CLOCK_INPUT, "Clock");
-		configInput(CV_INPUT, "");
+		configInput(CV_INPUT, "State modulation");
 
 		configOutput(GATE_OUTPUT, "");
 		configOutput(CV_OUTPUT, "");
 	}
 
-	__UINT8_TYPE__ state = 1;;
+	int state = 1;;
 	dsp::SchmittTrigger trigger;
 	int length = 8;
 	int prevAs;
 	bool xnor;
 
 	void lfsr() {
-		__UINT8_TYPE__ ad = 0;
+		int ad = 0;
 
 		for (int i = length - 1; i >= 0; i--) {
-			ad = (ad << 1) + (__UINT8_TYPE__)params[A0_PARAM + i].getValue();
+			ad = (ad << 1) + (int)params[A0_PARAM + i].getValue();
 		}
 
-		params[AS_PARAM].setValue(ad);
-
-		__UINT8_TYPE__ newBit = __builtin_popcount(ad & state) & 1;
+		int newBit = __builtin_popcount(ad & state) & 1;
 		state = (state << 1) | (xnor ? !newBit : newBit);
 		state &= (1 << length) - 1;
 	}
 
 	void leds() {
-		__UINT8_TYPE__ bits = state;
+		int bits = state;
 		for(int i = 0; i < length; i++) {
 			float bit = (float)(bits & 1);
 			lights[X0_LIGHT + i].setBrightness(bit ? 1.0 : 0.66);
@@ -167,7 +165,7 @@ struct LFSR8Poly : Module {
 		lfsr();
 
 		outputs[GATE_OUTPUT].setChannels(length);
-		__UINT8_TYPE__ bits = state;
+		int bits = state;
 		float vo = 0.f;
 		float cv0 = 1.0f;
 		if (inputs[CV_INPUT].isConnected()) {
@@ -181,6 +179,27 @@ struct LFSR8Poly : Module {
 		}
 
 		outputs[CV_OUTPUT].setVoltage(10.f * cv0 * vo / (float)(1 << length));
+	}
+
+	json_t* dataToJson() override {
+		json_t * rootJ = json_object();
+		json_t * asJ = json_array();
+		for (int i = 0; i < MAX_LENGTH; i++) {
+			json_array_append_new(asJ, json_integer((int)params[A0_PARAM + i].getValue()));
+		}
+		json_object_set_new(rootJ, "as", asJ);
+		return rootJ;
+	}
+
+	void dataFromJson(json_t* rootJ) override {
+		json_t * asJ = json_object_get(rootJ, "as");
+		if (asJ) {
+			size_t i;
+			json_t * a;
+			json_array_foreach(asJ, i, a) {
+				params[A0_PARAM + i].setValue((float)json_integer_value(a));
+			}
+		}
 	}
 };
 
@@ -203,14 +222,14 @@ struct LFSR8PolyWidget : ModuleWidget {
 		addParam(createParamCentered<FlatButtonTinyPush>(mm2px(Vec(30.0, 40.0)), module, LFSR8Poly::A5_PARAM));
 		addParam(createParamCentered<FlatButtonTinyPush>(mm2px(Vec(30.0, 44.0)), module, LFSR8Poly::A6_PARAM));
 		addParam(createParamCentered<FlatButtonTinyPush>(mm2px(Vec(30.0, 48.0)), module, LFSR8Poly::A7_PARAM));
-		addParam(createParamCentered<FlatKnobSmall>(mm2px(Vec(14.0, 76.0)), module, LFSR8Poly::CV0_PARAM));
-		addParam(createParamCentered<FlatKnobSmall>(mm2px(Vec(21.0, 76.0)), module, LFSR8Poly::CV1_PARAM));
-		addParam(createParamCentered<FlatKnobSmall>(mm2px(Vec(28.0, 76.0)), module, LFSR8Poly::CV2_PARAM));
-		addParam(createParamCentered<FlatKnobSmall>(mm2px(Vec(35.0, 76.0)), module, LFSR8Poly::CV3_PARAM));
-		addParam(createParamCentered<FlatKnobSmall>(mm2px(Vec(14.0, 83.0)), module, LFSR8Poly::CV4_PARAM));
-		addParam(createParamCentered<FlatKnobSmall>(mm2px(Vec(21.0, 83.0)), module, LFSR8Poly::CV5_PARAM));
-		addParam(createParamCentered<FlatKnobSmall>(mm2px(Vec(28.0, 83.0)), module, LFSR8Poly::CV6_PARAM));
-		addParam(createParamCentered<FlatKnobSmall>(mm2px(Vec(35.0, 83.0)), module, LFSR8Poly::CV7_PARAM));
+		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(14.0, 76.0)), module, LFSR8Poly::CV0_PARAM));
+		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(21.0, 76.0)), module, LFSR8Poly::CV1_PARAM));
+		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(28.0, 76.0)), module, LFSR8Poly::CV2_PARAM));
+		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(35.0, 76.0)), module, LFSR8Poly::CV3_PARAM));
+		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(14.0, 83.0)), module, LFSR8Poly::CV4_PARAM));
+		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(21.0, 83.0)), module, LFSR8Poly::CV5_PARAM));
+		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(28.0, 83.0)), module, LFSR8Poly::CV6_PARAM));
+		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(35.0, 83.0)), module, LFSR8Poly::CV7_PARAM));
 
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(13.0, 23.0)), module, LFSR8Poly::AS_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(13.0, 43.0)), module, LFSR8Poly::LEN_PARAM));

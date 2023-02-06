@@ -19,21 +19,21 @@ extern Model* modelPluck;
 
 struct Inlet : app::SvgPort {
 	Inlet() {
-		setSvg(Svg::load(asset::plugin(pluginInstance, "res/Inlet.svg")));
+		setSvg(Svg::load(asset::plugin(pluginInstance, "res/components/Inlet.svg")));
 		shadow->opacity = 0.0;
 	}
 };
 
 struct Outlet : app::SvgPort {
 	Outlet() {
-		setSvg(Svg::load(asset::plugin(pluginInstance, "res/Outlet.svg")));
+		setSvg(Svg::load(asset::plugin(pluginInstance, "res/components/Outlet.svg")));
 		shadow->opacity = 0.0;
 	}
 };
 
 struct PolyOutlet : app::SvgPort {
 	PolyOutlet() {
-		setSvg(Svg::load(asset::plugin(pluginInstance, "res/PolyOutlet.svg")));
+		setSvg(Svg::load(asset::plugin(pluginInstance, "res/components/PolyOutlet.svg")));
 		shadow->opacity = 0.0;
 	}
 };
@@ -54,22 +54,15 @@ struct FlatKnob : app::SvgKnob {
 
 struct FlatKnobMod : FlatKnob {
     FlatKnobMod() {
-		setSvg(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatCtrlKnobStd.svg")));
-        bg->setSvg(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatCtrlKnobStd_bg.svg")));
+		setSvg(Svg::load(asset::plugin(pluginInstance, "res/components/KnobMod.svg")));
+        bg->setSvg(Svg::load(asset::plugin(pluginInstance, "res/components/KnobMod_bg.svg")));
     }
 };
 
 struct FlatKnobStd : FlatKnob {
     FlatKnobStd() {
-		setSvg(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatKnobStd.svg")));
-        bg->setSvg(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatKnobStd_bg.svg")));
-    }
-};
-
-struct FlatKnobSmall : FlatKnob {
-    FlatKnobSmall() {
-		setSvg(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatKnobSmall.svg")));
-        bg->setSvg(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatKnobSmall_bg.svg")));
+		setSvg(Svg::load(asset::plugin(pluginInstance, "res/components/KnobStd.svg")));
+        bg->setSvg(Svg::load(asset::plugin(pluginInstance, "res/components/KnobStd_bg.svg")));
     }
 };
 
@@ -82,8 +75,8 @@ struct FlatButton : app::SvgSwitch {
 struct FlatButtonStd : FlatButton {
 	FlatButtonStd() {
 		momentary = true;
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatBtnStd_0.svg")));
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatBtnStd_1.svg")));
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/components/BtnStd_0.svg")));
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/components/BtnStd_1.svg")));
 	}
 };
 
@@ -103,8 +96,8 @@ struct FlatButtonStdPush : FlatButtonStd {
 struct FlatButtonTiny : FlatButton {
 	FlatButtonTiny() {
 		momentary = true;
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatBtnTiny_0.svg")));
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatBtnTiny_1.svg")));
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/components/BtnTiny_0.svg")));
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/components/BtnTiny_1.svg")));
 	}
 };
 
@@ -117,8 +110,8 @@ struct FlatButtonTinyPush : FlatButtonTiny {
 struct FlatSwitch : FlatButton {
 	FlatSwitch() {
 		momentary = false;
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatSwitch_0.svg")));
-		addFrame(Svg::load(asset::plugin(pluginInstance, "res/flat/FlatSwitch_1.svg")));
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/components/Switch_0.svg")));
+		addFrame(Svg::load(asset::plugin(pluginInstance, "res/components/Switch_1.svg")));
 	}
 };
 
@@ -146,9 +139,9 @@ struct FlatLight : RectangleLight<TBase> {
 };
 
 template <typename TBase>
-struct FlatLightSquare : FlatLight<TBase> {
-	FlatLightSquare() {
-		this->box.size = mm2px(math::Vec(1.5f, 1.5f));
+struct FlatLightSquareBig : FlatLight<TBase> {
+	FlatLightSquareBig() {
+		this->box.size = mm2px(math::Vec(6.0f, 6.0f));
 	}
 };
 
@@ -156,6 +149,16 @@ template <typename TBase>
 struct FlatLightSquareStd : FlatLight<TBase> {
 	FlatLightSquareStd() {
 		this->box.size = mm2px(math::Vec(3.5f, 3.5f));
+	}
+};
+
+struct FlatSliderMod : app::SvgSlider {
+	FlatSliderMod() {
+		maxHandlePos = math::Vec(1.476, 1.476); // 0.5mm = 1.476px
+		minHandlePos = math::Vec(1.476, 14.76); // 5mm = 14.76px
+		speed = 4.f;
+		setBackgroundSvg(Svg::load(asset::plugin(pluginInstance, "res/components/SliderMod.svg")));
+		setHandleSvg(Svg::load(asset::plugin(pluginInstance, "res/components/SliderModHandle.svg")));
 	}
 };
 
@@ -201,7 +204,7 @@ struct FlatDisplay : widget::Widget {
 
 		int i = 0;
 		for (std::string str : text) {
-			nvgText(args.vg, mm2px(2.0), mm2px(2.0) + i * (fontSize + 2), str.c_str(), NULL);
+			nvgText(args.vg, mm2px(2.0), mm2px(2.0) + i * (fontSize + 1), str.c_str(), NULL);
 			i += 1;
 		}
 		nvgRestore(args.vg);

@@ -4,7 +4,6 @@ struct ChaosMaps : Module {
 	enum ParamId {
 		R_PARAM,
 		R_MOD_PARAM,
-		LINK_PARAM,
 		MAP_PARAM,
 		RESET_PARAM,
 		PARAMS_LEN
@@ -26,17 +25,16 @@ struct ChaosMaps : Module {
 
 	ChaosMaps() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
-		configParam(R_PARAM, 0.f, 1.f, 0.5f, "");
-		configParam(R_MOD_PARAM, -1.f, 1.f, 0.f, "");
-		configParam(LINK_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(MAP_PARAM, 0.0f, 1.f, 0.f, "");
+		configParam(R_PARAM, 0.f, 1.f, 0.5f, "R");
+		configParam(R_MOD_PARAM, -1.f, 1.f, 0.f, "R modulation amount");
+		configParam(MAP_PARAM, 0.0f, 1.f, 0.f, "Map: tent or logistic");
 		paramQuantities[MAP_PARAM]->snapEnabled = true;
-		configParam(RESET_PARAM, 0.f, 1.f, 0.f, "");
-		configInput(RESET_INPUT, "");
-		configInput(R_INPUT, "");
-		configInput(CLOCK_INPUT, "");
-		configOutput(CV_OUTPUT, "");
-		configOutput(GATE_OUTPUT, "");
+		configParam(RESET_PARAM, 0.f, 1.f, 0.f, "Reset");
+		configInput(RESET_INPUT, "Reset");
+		configInput(R_INPUT, "R modulation");
+		configInput(CLOCK_INPUT, "Clock");
+		configOutput(CV_OUTPUT, "CV");
+		configOutput(GATE_OUTPUT, "Gate");
 	}
 
 	dsp::SchmittTrigger trigger;
@@ -66,7 +64,7 @@ struct ChaosMaps : Module {
 		int map = (int)params[MAP_PARAM].getValue();
 
 		if (map == LOGISTIC_MAP) {
-			text = {"LOGISTIC"};
+			text = {"LOGIS-", "TIC"};
 
 		}
 
@@ -81,7 +79,7 @@ struct ChaosMaps : Module {
 		float rRaw = params[R_PARAM].getValue();
 
 		if (inputs[R_INPUT].isConnected()) {
-			float mod = params[R_INPUT].getValue();
+			float mod = params[R_MOD_PARAM].getValue();
 			rRaw += inputs[R_INPUT].getVoltage() * mod / 10.f;
 		}
 		rRaw = clamp(rRaw, 0.0, 1.0);
@@ -116,9 +114,9 @@ struct ChaosMapsWidget : ModuleWidget {
 		addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 		addChild(createWidget<ScrewBlack>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-		addParam(createParamCentered<FlatSwitch>(mm2px(Vec(10.16, 21.5)), module, ChaosMaps::MAP_PARAM));
+		addParam(createParamCentered<FlatSwitch>(mm2px(Vec(4.0, 23.0)), module, ChaosMaps::MAP_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(13.0, 43.0)), module, ChaosMaps::R_PARAM));
-		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(4.5, 43.0)), module, ChaosMaps::R_MOD_PARAM));
+		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(6.0, 43.0)), module, ChaosMaps::R_MOD_PARAM));
 		addParam(createParamCentered<FlatButtonStd>(mm2px(Vec(13.0, 63.0)), module, ChaosMaps::RESET_PARAM));
 
 		addInput(createInputCentered<Inlet>(mm2px(Vec(6.0, 36.0)), module, ChaosMaps::R_INPUT));
@@ -128,10 +126,10 @@ struct ChaosMapsWidget : ModuleWidget {
 		addOutput(createOutputCentered<Outlet>(mm2px(Vec(15.0, 99.0)), module, ChaosMaps::GATE_OUTPUT));
 		addOutput(createOutputCentered<Outlet>(mm2px(Vec(15.0, 107.0)), module, ChaosMaps::CV_OUTPUT));
 
-		FlatDisplay<ChaosMaps> * display = createWidget<FlatDisplay<ChaosMaps>>(mm2px(Vec(0, 24.5)));
-		display->box.size = mm2px(Vec(20.32, 4.0));
+		FlatDisplay<ChaosMaps> * display = createWidget<FlatDisplay<ChaosMaps>>(mm2px(Vec(6.0, 19.0)));
+		display->box.size = mm2px(Vec(14.32, 8.0));
 		display->module = module;
-		display->fontSize = 10;
+		display->fontSize = 11;
 		addChild(display);
 	}
 };

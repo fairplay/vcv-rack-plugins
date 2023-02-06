@@ -41,7 +41,7 @@ struct LogisticScratch : Module {
 		configInput(L1_INPUT, "λ1 modulation");
 		configInput(L2_INPUT, "λ2 modulation");
 		configInput(DX_INPUT, "Δx modulation");
-		configOutput(OUT_OUTPUT);
+		configOutput(OUT_OUTPUT, "");
 	}
 
 	enum Stage {
@@ -138,13 +138,13 @@ struct LogisticScratchWidget : ModuleWidget {
 		addChild(createWidget<ScrewBlack>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(13.0, 23.0)), module, LogisticScratch::FREQ_PARAM));
-		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(4.5, 23.0)), module, LogisticScratch::FM_PARAM));
+		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(6.0, 24.0)), module, LogisticScratch::FM_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(13.0, 43.0)), module, LogisticScratch::L1_PARAM));
-		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(4.5, 43.0)), module, LogisticScratch::L1_MOD_PARAM));
+		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(6.0, 44.0)), module, LogisticScratch::L1_MOD_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(13.0, 63.0)), module, LogisticScratch::L2_PARAM));
-		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(4.5, 63.0)), module, LogisticScratch::L2_MOD_PARAM));
+		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(6.0, 64.0)), module, LogisticScratch::L2_MOD_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(13.0, 83.0)), module, LogisticScratch::DX_PARAM));
-		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(4.5, 83.0)), module, LogisticScratch::DX_MOD_PARAM));
+		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(6.0, 84.0)), module, LogisticScratch::DX_MOD_PARAM));
 
 		addInput(createInputCentered<Inlet>(mm2px(Vec(6.0, 16.0)), module, LogisticScratch::FREQ_INPUT));
 		addInput(createInputCentered<Inlet>(mm2px(Vec(6.0, 36.0)), module, LogisticScratch::L1_INPUT));

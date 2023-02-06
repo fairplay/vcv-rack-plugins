@@ -27,6 +27,7 @@ struct MuLooper : Module {
 	enum OutputId {
 		MONO_OUTPUT,
 		POLY_OUTPUT,
+		EOC_OUTPUT,
 		OUTPUTS_LEN
 	};
 	enum LightId {
@@ -43,7 +44,7 @@ struct MuLooper : Module {
 		configParam(SPLT_PARAM, 1.0, MAX_CHUNKS, 1.0, "Split", "");
 		configParam(SCN_PARAM, 0.f, 1.f, 0.f, "Scan", "");
 		configParam(SCN_MOD_PARAM, -1.f, 1.f, 0.f, "Scan modulation amount", "");
-		configParam(SPD_PARAM, -4.f, 4.f, 1.f, "Speed", " samples");
+		configParam(SPD_PARAM, -2.f, 2.f, 1.f, "Speed", " samples");
 		configParam(SPD_MOD_PARAM, -1.f, 1.f, 0.f, "Speed modulation amount", "");
 		configParam(FBK_PARAM, 0.f, 1.f, 0.f, "Feedback", "", 0.f, 100.f, 0.f);
 		configParam(FBK_MOD_PARAM, -1.f, 1.f, 0.f, "Feedback modulation amount", "");
@@ -58,6 +59,7 @@ struct MuLooper : Module {
 		configInput(WET_INPUT, "Dry/Wet modulatiob");
 		configOutput(MONO_OUTPUT, "Mono");
 		configOutput(POLY_OUTPUT, "Poly");
+		configOutput(EOC_OUTPUT, "End-Of-The-Record-Cycle");
 
 		paramQuantities[SPLT_PARAM]->snapEnabled = true;
 	}
@@ -77,7 +79,7 @@ struct MuLooper : Module {
 		bool doRecording = params[REC_PARAM].getValue() > 0.f;
 
 		if (inputs[REC_INPUT].isConnected()) {
-			doRecording = inputs[REC_INPUT].getVoltage() > 0.f;
+			doRecording |= inputs[REC_INPUT].getVoltage() > 0.f;
 		}
 
 		if (!isRecord && doRecording && !isRecorded) {
@@ -106,7 +108,7 @@ struct MuLooper : Module {
 		float speed = params[SPD_PARAM].getValue();
 		if (inputs[SPD_INPUT].isConnected()) {
 			float mod = params[SPD_MOD_PARAM].getValue();
-			speed += inputs[SPD_INPUT].getVoltage() / 10.0 * mod;
+			speed += inputs[SPD_INPUT].getVoltage() / 5.0 * mod;
 		}
 
 		float chunkRaw = params[SCN_PARAM].getValue();
@@ -185,6 +187,7 @@ struct MuLooper : Module {
 		float currentSample = currentSamples[0];
 		outputs[MONO_OUTPUT].setVoltage(currentSample * wet + signal * (1.0f - wet));
 
+		bool eoc = false;
 		if (isRecord) {
 			recordBuffer[recordPosition++] = signal + currentSample * fbk;
 
@@ -192,8 +195,22 @@ struct MuLooper : Module {
 				isRecorded = true;
 				isRecord = false;
 				params[REC_PARAM].setValue(0.0f);
+				eoc = true;
 			}
+			outputs[EOC_OUTPUT].setVoltage(eoc ? 10.0 : 0.0);
 		}
+	}
+
+	json_t* dataToJson() override {
+		json_t * rootJ = json_object();
+		json_object_set_new(rootJ, "scaleSpeed", json_boolean(scaleSpeed));
+		return rootJ;
+	}
+
+	void dataFromJson(json_t* rootJ) override {
+		json_t * scaleSpeedJ = json_object_get(rootJ, "scaleSpeed");
+		if (scaleSpeedJ)
+			scaleSpeed = json_boolean_value(scaleSpeedJ);
 	}
 };
 
@@ -210,24 +227,25 @@ struct MuLooperWidget : ModuleWidget {
 		addParam(createParamCentered<FlatButtonStdPush>(mm2px(Vec(13.0, 23.0)), module, MuLooper::REC_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(33.0, 23.0)), module, MuLooper::SPLT_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(13.0, 63.0)), module, MuLooper::SCN_PARAM));
-		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(4.5, 63.0)), module, MuLooper::SCN_MOD_PARAM));
+		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(6.0, 63.0)), module, MuLooper::SCN_MOD_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(33.0, 63.0)), module, MuLooper::SPD_PARAM));
-		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(24.5, 63.0)), module, MuLooper::SPD_MOD_PARAM));
+		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(26.0, 63.0)), module, MuLooper::SPD_MOD_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(13.0, 83.0)), module, MuLooper::FBK_PARAM));
-		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(4.5, 83.0)), module, MuLooper::FBK_MOD_PARAM));
+		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(6.0, 83.0)), module, MuLooper::FBK_MOD_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(33.0, 83.0)), module, MuLooper::WET_PARAM));
-		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(24.5, 83.0)), module, MuLooper::WET_MOD_PARAM));
+		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(26.0, 83.0)), module, MuLooper::WET_MOD_PARAM));
 
 		addInput(createInputCentered<Inlet>(mm2px(Vec(6.0, 99.0)), module, MuLooper::IN_INPUT));
 		addInput(createInputCentered<Inlet>(mm2px(Vec(6.0, 16.0)), module, MuLooper::REC_INPUT));
 		addInput(createInputCentered<Inlet>(mm2px(Vec(26.0, 16.0)), module, MuLooper::SPLT_INPUT));
 		addInput(createInputCentered<Inlet>(mm2px(Vec(6.0, 56.0)), module, MuLooper::SCN_INPUT));
-		addInput(createInputCentered<Inlet>(mm2px(Vec(6.0, 76.0)), module, MuLooper::FBK_INPUT));
 		addInput(createInputCentered<Inlet>(mm2px(Vec(26.0, 56.0)), module, MuLooper::SPD_INPUT));
+		addInput(createInputCentered<Inlet>(mm2px(Vec(6.0, 76.0)), module, MuLooper::FBK_INPUT));
 		addInput(createInputCentered<Inlet>(mm2px(Vec(26.0, 76.0)), module, MuLooper::WET_INPUT));
 
 		addOutput(createOutputCentered<Outlet>(mm2px(Vec(35.0, 99.0)), module, MuLooper::MONO_OUTPUT));
 		addOutput(createOutputCentered<PolyOutlet>(mm2px(Vec(35.0, 107.0)), module, MuLooper::POLY_OUTPUT));
+		addOutput(createOutputCentered<Outlet>(mm2px(Vec(35.0, 115.0)), module, MuLooper::EOC_OUTPUT));
 
 		FlatDisplay<MuLooper> * display = createWidget<FlatDisplay<MuLooper>>(mm2px(Vec(1.0, 30)));
 		display->box.size = mm2px(Vec(39.0, 8.0));

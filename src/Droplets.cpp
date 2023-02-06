@@ -3,18 +3,20 @@
 struct Droplets : Module {
 	enum ParamId {
 		FLOW_PARAM,
-		VISCOSITY_PARAM,
+		FLOW_MOD_PARAM,
+		VISC_PARAM,
+		VISC_MOD_PARAM,
 		PARAMS_LEN
 	};
 	enum InputId {
-		GATE_INPUT,
 		FLOW_INPUT,
-		VISCOSITY_INPUT,
+		VISC_INPUT,
+		TICK_INPUT,
 		INPUTS_LEN
 	};
 	enum OutputId {
 		DROP_OUTPUT,
-		CV_VELOCITY_OUTPUT,
+		CV_OUTPUT,
 		OUTPUTS_LEN
 	};
 	enum LightId {
@@ -29,107 +31,124 @@ struct Droplets : Module {
 		LIGHTS_LEN
 	};
 
+	const float MAX_FLOW = 1.0;
+	const float MAX_VISC = 10.0;
+
+	struct Cell {
+		bool drop;
+		float volume;
+		Cell() {
+			drop = false;
+			volume = 0.0;
+		}
+	};
+
+	struct Pipe {
+		const static int MAX_CELLS = 8;
+		Cell * cells[MAX_CELLS];
+		float maxVolume = 10.0;
+
+		Pipe() {
+			for (int i = 0; i < MAX_CELLS; i++) {
+				cells[i] = new Cell();
+			}
+		}
+
+		void feed(float flow) {
+			cells[0]->volume = clamp(cells[0]->volume + flow, 0.f, maxVolume);
+		}
+
+		void leak(float viscosity) {
+			for (int i = MAX_CELLS - 1; i >= 0; i--) {
+				leakCell(i, viscosity);
+			}
+		}
+
+		void leakCell(int n, float viscosity) {
+			float leakage = 0.0;
+			if (cells[n]->volume >= viscosity) {
+				cells[n]->drop = true;
+				leakage = cells[n]->volume;
+			} else {
+				cells[n]->drop = false;
+				float pressure = 0.0;
+				for (int i = 0; i < n; i++) {
+					pressure += cells[i]->volume;
+				}
+
+				float leakage = pressure / viscosity;
+
+				if (leakage > cells[n]->volume) {
+					leakage = cells[n]->volume;
+				}
+			}
+
+			if (n == MAX_CELLS - 1) {
+				cells[n]->volume -= leakage;
+			} else {
+				if (cells[n + 1]->volume + leakage > maxVolume) {
+					leakage = maxVolume - cells[n + 1]->volume;
+				}
+				cells[n + 1]->volume += leakage;
+				cells[n]->volume -= leakage;
+			}
+		}
+	};
+
+	Pipe * pipe;
+	dsp::SchmittTrigger trigger;
+
 	Droplets() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
-		configParam(FLOW_PARAM, 0.f, 1.f, 0.f, "");
-		configParam(VISCOSITY_PARAM, 0.1f, 1.f, 0.1f, "");
-		configInput(GATE_INPUT, "");
-		configInput(FLOW_INPUT, "");
-		configInput(VISCOSITY_INPUT, "");
-		configOutput(DROP_OUTPUT, "");
-		configOutput(CV_VELOCITY_OUTPUT, "");
-	}
-
-	bool triggered = false;
-	dsp::SchmittTrigger trigger;
-	float state[8] = {0.f};
-	float viscosity;
-	float flow;
-	float drop = false;
-
-	float getVelocity(int n) {
-		if (state[n] > viscosity) {
-			drop = true;
-			return state[n];
-		} else {
-			drop = false;
-		}
-
-
-		float pressure = flow;
-		for (int i = n + 1; i < 8; i++) {
-			pressure += state[i];
-		}
-
-		float velocity = pressure / viscosity / 10.f;
-
-		if (velocity > state[n]) {
-			velocity = state[n];
-		}
-
-		if (n > 0 && state[n - 1] + velocity > 1.f) {
-			velocity = 1.f - state[n - 1];
-		}
-
-		return velocity;
-	}
-
-	void setLeds() {
-		for (int i = L0_LIGHT; i <= L7_LIGHT; i++) {
-			lights[i].setBrightness(state[i]);
-		}
+		configParam(FLOW_PARAM, 0.f, MAX_FLOW, 0.f, "Flow");
+		configParam(FLOW_MOD_PARAM, -1.f, 1.f, 0.f, "Flow modulation amount");
+		configParam(VISC_PARAM, 0.001f, MAX_VISC, 0.1f, "Viscosity");
+		configParam(VISC_MOD_PARAM, -1.f, 1.f, 0.f, "Viscosity modulation amount");
+		configInput(FLOW_INPUT, "Flow modulation");
+		configInput(VISC_INPUT, "Viscosity modulation");
+		configInput(TICK_INPUT, "Tick");
+		configOutput(DROP_OUTPUT, "Drop");
+		configOutput(CV_OUTPUT, "Poly CV");
+		pipe = new Pipe();
 	}
 
 	void process(const ProcessArgs& args) override {
-		if (trigger.process(inputs[GATE_INPUT].getVoltage(), 0.1f, 2.f)) {
-			triggered ^= true;
-		}
+		bool triggered = trigger.process(inputs[TICK_INPUT].getVoltage(), 0.1f, 2.f);
+		triggered &= trigger.isHigh();
 		if (!triggered) {
 			return;
 		}
 
-		viscosity = params[VISCOSITY_PARAM].getValue();
-		if (inputs[VISCOSITY_INPUT].isConnected()) {
-			viscosity = inputs[VISCOSITY_INPUT].getVoltage() / 10.f;
-			viscosity = clamp(viscosity, 0.f, 1.f);
-		}
-
-		flow = params[FLOW_PARAM].getValue();
+		float flow = params[FLOW_PARAM].getValue();
 		if (inputs[FLOW_INPUT].isConnected()) {
-			flow += inputs[FLOW_INPUT].getVoltage() / 10.f;
-			flow = clamp(flow, 0.f, 1.f);
+			float mod = params[FLOW_MOD_PARAM].getValue();
+			flow += inputs[FLOW_INPUT].getVoltage() * mod * MAX_FLOW / 10.0;
 		}
+		flow = clamp(flow, 0.f, MAX_FLOW);
 
-		//float leakVelocity = 0.f;
+		float viscosity = params[VISC_PARAM].getValue();
+		if (inputs[VISC_INPUT].isConnected()) {
+			float mod = params[VISC_MOD_PARAM].getValue();
+			viscosity += inputs[VISC_INPUT].getVoltage() * mod * MAX_VISC / 10.0;
+		}
+		viscosity = clamp(viscosity, 0.f, MAX_VISC);
+
+		pipe->leak(viscosity);
+		pipe->feed(flow);
+
+		outputs[DROP_OUTPUT].setChannels(8);
+		outputs[CV_OUTPUT].setChannels(8);
 
 		for (int i = 0; i < 8; i++) {
-			float velocity = getVelocity(i);
-			state[i] -= velocity;
-			if (i > 0) {
-				state[i - 1] += velocity;
-			} else {
-				//leakVelocity = velocity;
-			}
-
+			outputs[CV_OUTPUT].setVoltage(pipe->cells[i]->volume, i);
+			outputs[DROP_OUTPUT].setVoltage(pipe->cells[i]->drop ? 10.f : 0.f, i);
+			lights[i].setBrightness(pipe->cells[i]->volume / 10.f);
 		}
-		state[7] = clamp(state[7] + flow, 0.f, 1.f);
-
-		float out = 0.f;
-		for (int i = 0; i < 8; i++) {
-			out = 2.f * out + state[i];
-		}
-
-		outputs[DROP_OUTPUT].setVoltage(drop ? 10.f : 0.f);
-		outputs[CV_VELOCITY_OUTPUT].setVoltage(out / 256.f);
-		//outputs[CV_VELOCITY_OUTPUT].setVoltage(leakVelocity);
-
-		setLeds();
-		triggered = false;
 	}
 
 	void onReset(const ResetEvent& e) override {
-		std::fill(state, state + 8, 0.f);
-		setLeds();
+		delete pipe;
+		pipe = new Pipe();
 	}
 };
 
@@ -138,28 +157,31 @@ struct DropletsWidget : ModuleWidget {
 		setModule(module);
 		setPanel(createPanel(asset::plugin(pluginInstance, "res/Droplets.svg")));
 
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
-		addChild(createWidget<ScrewSilver>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
-		addChild(createWidget<ScrewSilver>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ScrewBlack>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ScrewBlack>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(28.0, 42.0)), module, Droplets::FLOW_PARAM));
-		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(28.0, 72.0)), module, Droplets::VISCOSITY_PARAM));
+		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(13.0, 23.0)), module, Droplets::FLOW_PARAM));
+		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(6.0, 24.0)), module, Droplets::FLOW_MOD_PARAM));
+		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(13.0, 43.0)), module, Droplets::VISC_PARAM));
+		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(6.0, 44.0)), module, Droplets::VISC_MOD_PARAM));
 
-		addInput(createInputCentered<Inlet>(mm2px(Vec(7.5, 15.0)), module, Droplets::GATE_INPUT));
-		addInput(createInputCentered<Inlet>(mm2px(Vec(21.0, 35.0)), module, Droplets::FLOW_INPUT));
-		addInput(createInputCentered<Inlet>(mm2px(Vec(21.0, 65.0)), module, Droplets::VISCOSITY_INPUT));
+		addInput(createInputCentered<Inlet>(mm2px(Vec(6.0, 16.0)), module, Droplets::FLOW_INPUT));
+		addInput(createInputCentered<Inlet>(mm2px(Vec(6.0, 36.0)), module, Droplets::VISC_INPUT));
+		addInput(createInputCentered<Inlet>(mm2px(Vec(6.0, 56.0)), module, Droplets::TICK_INPUT));
 
-		addOutput(createOutputCentered<Outlet>(mm2px(Vec(35.08, 90.0)), module, Droplets::DROP_OUTPUT));
-		addOutput(createOutputCentered<Outlet>(mm2px(Vec(35.08, 100.0)), module, Droplets::CV_VELOCITY_OUTPUT));
+		addOutput(createOutputCentered<Outlet>(mm2px(Vec(25.0, 99.0)), module, Droplets::DROP_OUTPUT));
+		addOutput(createOutputCentered<PolyOutlet>(mm2px(Vec(25.0, 107.0)), module, Droplets::CV_OUTPUT));
 
-		addChild(createLightCentered<FlatLightSquareStd<BlueLight>>(mm2px(Vec(7.5, 35.0)), module, Droplets::L6_LIGHT));
-		addChild(createLightCentered<FlatLightSquareStd<BlueLight>>(mm2px(Vec(7.5, 45.0)), module, Droplets::L5_LIGHT));
-		addChild(createLightCentered<FlatLightSquareStd<BlueLight>>(mm2px(Vec(7.5, 55.0)), module, Droplets::L4_LIGHT));
-		addChild(createLightCentered<FlatLightSquareStd<BlueLight>>(mm2px(Vec(7.5, 65.0)), module, Droplets::L3_LIGHT));
-		addChild(createLightCentered<FlatLightSquareStd<BlueLight>>(mm2px(Vec(7.5, 75.0)), module, Droplets::L2_LIGHT));
-		addChild(createLightCentered<FlatLightSquareStd<BlueLight>>(mm2px(Vec(7.5, 85.0)), module, Droplets::L1_LIGHT));
-		addChild(createLightCentered<FlatLightSquareStd<BlueLight>>(mm2px(Vec(7.5, 95.0)), module, Droplets::L0_LIGHT));
+		addChild(createLightCentered<FlatLightSquareBig<BlackWhiteLight>>(mm2px(Vec(25.0, 20.0)), module, Droplets::L0_LIGHT));
+		addChild(createLightCentered<FlatLightSquareBig<BlackWhiteLight>>(mm2px(Vec(25.0, 26.0)), module, Droplets::L1_LIGHT));
+		addChild(createLightCentered<FlatLightSquareBig<BlackWhiteLight>>(mm2px(Vec(25.0, 32.0)), module, Droplets::L2_LIGHT));
+		addChild(createLightCentered<FlatLightSquareBig<BlackWhiteLight>>(mm2px(Vec(25.0, 38.0)), module, Droplets::L3_LIGHT));
+		addChild(createLightCentered<FlatLightSquareBig<BlackWhiteLight>>(mm2px(Vec(25.0, 44.0)), module, Droplets::L4_LIGHT));
+		addChild(createLightCentered<FlatLightSquareBig<BlackWhiteLight>>(mm2px(Vec(25.0, 50.0)), module, Droplets::L5_LIGHT));
+		addChild(createLightCentered<FlatLightSquareBig<BlackWhiteLight>>(mm2px(Vec(25.0, 56.0)), module, Droplets::L6_LIGHT));
+		addChild(createLightCentered<FlatLightSquareBig<BlackWhiteLight>>(mm2px(Vec(25.0, 62.0)), module, Droplets::L7_LIGHT));
 	}
 };
 

@@ -8,7 +8,7 @@
    version="1.1"
    id="svg827"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
-   sodipodi:docname="FlatBtnTiny_0.svg"
+   sodipodi:docname="BtnTiny_1.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -25,9 +25,9 @@
      showgrid="true"
      showborder="true"
      inkscape:showpageshadow="false"
-     inkscape:zoom="14.481547"
-     inkscape:cx="0.41432038"
-     inkscape:cy="20.646965"
+     inkscape:zoom="28.178125"
+     inkscape:cx="4.560275"
+     inkscape:cy="9.6528779"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -54,10 +54,10 @@
      inkscape:groupmode="layer"
      id="layer1">
     <circle
-       style="fill:#000000;fill-rule:evenodd;stroke-width:0.1;fill-opacity:0;stroke-dasharray:none;stroke:#000000;stroke-opacity:1"
-       id="path16318"
-       cx="1.9999999"
-       cy="1.9999999"
-       r="1.4999999" />
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke-width:0;stroke-dasharray:none"
+       id="path1263"
+       cx="2"
+       cy="2"
+       r="1.5" />
   </g>
 </svg>

@@ -96,7 +96,7 @@ struct LFSR16Poly : Module {
 		paramQuantities[SPLIT_PARAM]->snapEnabled = true;
 
 		configInput(AS_INPUT, "LFSR coefficients");
-		configInput(SPLIT_INPUT, "");
+		configInput(SPLIT_INPUT, "Split sequences");
 		configInput(CLOCK1_INPUT, "Trigger sequence 1");
 		configInput(CLOCK2_INPUT, "Trigger sequence 2");
 		configInput(NOT1_INPUT, "XNOR sequence 1");
@@ -246,6 +246,27 @@ struct LFSR16Poly : Module {
 	void onReset(const ResetEvent& e) override {
 		state1 = 1;
 		state2 = 1;
+	}
+
+	json_t* dataToJson() override {
+		json_t * rootJ = json_object();
+		json_t * asJ = json_array();
+		for (int i = 0; i < MAX_LENGTH; i++) {
+			json_array_append_new(asJ, json_integer((int)params[A0_PARAM + i].getValue()));
+		}
+		json_object_set_new(rootJ, "as", asJ);
+		return rootJ;
+	}
+
+	void dataFromJson(json_t* rootJ) override {
+		json_t * asJ = json_object_get(rootJ, "as");
+		if (asJ) {
+			size_t i;
+			json_t * a;
+			json_array_foreach(asJ, i, a) {
+				params[A0_PARAM + i].setValue((float)json_integer_value(a));
+			}
+		}
 	}
 };
 

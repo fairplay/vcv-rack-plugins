@@ -152,15 +152,15 @@ struct PluckWidget : ModuleWidget {
 		addParam(createParamCentered<FlatButtonStdLatch>(mm2px(Vec(13.0, 23.0)), module, Pluck::PLUCK_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(33.0, 23.0)), module, Pluck::FREQ_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(13.0, 43.0)), module, Pluck::DAMP_PARAM));
-		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(4.5, 43.0)), module, Pluck::DAMP_MOD_PARAM));
+		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(6.0, 43.0)), module, Pluck::DAMP_MOD_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(33.0, 43.0)), module, Pluck::ANGLE_PARAM));
-		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(24.5, 43.0)), module, Pluck::ANGLE_MOD_PARAM));
+		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(26.0, 43.0)), module, Pluck::ANGLE_MOD_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(13.0, 63.0)), module, Pluck::DECAY_PARAM));
-		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(4.5, 63.0)), module, Pluck::DECAY_MOD_PARAM));
+		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(6.0, 63.0)), module, Pluck::DECAY_MOD_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(33.0, 63.0)), module, Pluck::POSITION_PARAM));
-		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(24.5, 63.0)), module, Pluck::POSITION_MOD_PARAM));
+		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(26.0, 63.0)), module, Pluck::POSITION_MOD_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(13.0, 83.0)), module, Pluck::LEVEL_PARAM));
-		addParam(createParamCentered<FlatKnobMod>(mm2px(Vec(4.5, 83.0)), module, Pluck::LEVEL_MOD_PARAM));
+		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(6.0, 83.0)), module, Pluck::LEVEL_MOD_PARAM));
 
 		addInput(createInputCentered<Inlet>(mm2px(Vec(6.0, 16.0)), module, Pluck::PLUCK_INPUT));
 		addInput(createInputCentered<Inlet>(mm2px(Vec(26.0, 16.0)), module, Pluck::FREQ_INPUT));
@@ -171,7 +171,7 @@ struct PluckWidget : ModuleWidget {
 		addInput(createInputCentered<Inlet>(mm2px(Vec(6.0, 76.0)), module, Pluck::LEVEL_INPUT));
 		addInput(createInputCentered<Inlet>(mm2px(Vec(6.0, 99.0)), module, Pluck::EXCITER_INPUT));
 
-		addOutput(createOutputCentered<Outlet>(mm2px(Vec(35.0, 99.0)), module, Pluck::OUT_OUTPUT));
+		addOutput(createOutputCentered<PolyOutlet>(mm2px(Vec(35.0, 99.0)), module, Pluck::OUT_OUTPUT));
 	}
 };
 

@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="8mm"
-   height="8mm"
-   viewBox="0 0 8 8"
+   width="4mm"
+   height="4mm"
+   viewBox="0 0 4 4"
    version="1.1"
    id="svg827"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
-   sodipodi:docname="FlatBtnSmall_1.svg"
+   sodipodi:docname="BtnTiny_0.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -25,9 +25,9 @@
      showgrid="true"
      showborder="true"
      inkscape:showpageshadow="false"
-     inkscape:zoom="14.481547"
-     inkscape:cx="3.5562499"
-     inkscape:cy="20.646965"
+     inkscape:zoom="28.178125"
+     inkscape:cx="-3.4778751"
+     inkscape:cy="8.3398026"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -54,16 +54,10 @@
      inkscape:groupmode="layer"
      id="layer1">
     <circle
-       style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.5;stroke-linecap:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
-       id="path1680"
-       cx="4"
-       cy="4"
-       r="3.75" />
-    <circle
-       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
-       id="path1681"
-       cx="4"
-       cy="4"
-       r="1.9999995" />
+       style="fill:#000000;fill-opacity:0;fill-rule:evenodd;stroke:#000000;stroke-width:0.249999;stroke-dasharray:none;stroke-opacity:1"
+       id="path1126"
+       cx="2"
+       cy="2"
+       r="1.1250006" />
   </g>
 </svg>
