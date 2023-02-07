@@ -19,7 +19,8 @@
       "description": "Recording sampler for the very short (65536 samples max) loops",
       "tags": [
         "Sampler",
-        "Recording"
+        "Recording",
+        "Polyphonic"
       ]
     },
     {
@@ -37,7 +38,8 @@
       "name": "LFSR8 Poly",
       "description": "Fully deterministic sequencer based on 8-bit LFSR capable to produce pseudo-random results",
       "tags": [
-        "Sequencer"
+        "Sequencer",
+        "Polyphonic"
       ]
     },
     {
@@ -45,28 +47,35 @@
       "name": "LFSR16 Poly",
       "description": "16-bit LFSR sequencer with ability to split for two independent registers",
       "tags": [
-        "Sequencer"
+        "Sequencer",
+        "Polyphonic"
       ]
     },
     {
       "slug": "Droplets",
       "name": "Droplets",
-      "description": "",
-      "tags": []
+      "description": "Sequencer loosely based on the liquid flow in the leaky faucet",
+      "tags": [
+        "Sequencer",
+        "Polyphonic"
+      ]
     },
     {
       "slug": "ChaosMaps",
       "name": "ChaosMaps",
-      "description": "",
-      "tags": []
+      "description": "Sequencer based on the logistic and tent maps",
+      "tags": [
+        "Sequencer"
+      ]
     },
     {
       "slug": "Pluck",
       "name": "Pluck",
-      "description": "",
+      "description": "Karplus-Strong plucked string implementation",
       "tags": [
         "Oscillator",
-        "Physical modeling"
+        "Physical modeling",
+        "Polyphonic"
       ]
     }
   ]

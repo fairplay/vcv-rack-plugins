@@ -17,7 +17,7 @@ struct Exciter  {
         if (excInput) {
             excIn = excVoltage * 0.5;
         } else {
-            excIn = rand() / (RAND_MAX + 1.0) - 0.5;
+            excIn = 5.0 * rand() / (RAND_MAX + 1.0) - 2.5;
         }
         x[xPos] = excIn;
 		xPos = (xPos + 1) % maxLength;
@@ -91,15 +91,15 @@ struct KarplusStrong {
     }
 
     void setDecayFromT60(float t60) {
-		decay = pow(0.001, 1.0 / (freq * t60));
+        decay = pow(0.001, 1.0 / (freq * t60));
     }
 
 	float next() {
         float frac = lengthRaw - (float)length;
 		int yPos1 = (yPos + 1) % length;
 
-        float h0 = (2.0 - damp) / 2.0;
-        float h1 = damp / 4.0;
+        float h0 = 1.0 - damp;
+        float h1 = damp / 2.0;
 
 		float currentSample = y[yPos] * (1.0 - frac) + y[yPos1] * frac;
 		y[yPos] = decay * (h0 * sample1 + h1 * (currentSample + sample2));

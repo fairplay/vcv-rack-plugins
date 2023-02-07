@@ -44,7 +44,7 @@ struct MuLooper : Module {
 		configParam(SPLT_PARAM, 1.0, MAX_CHUNKS, 1.0, "Split", "");
 		configParam(SCN_PARAM, 0.f, 1.f, 0.f, "Scan", "");
 		configParam(SCN_MOD_PARAM, -1.f, 1.f, 0.f, "Scan modulation amount", "");
-		configParam(SPD_PARAM, -2.f, 2.f, 1.f, "Speed", " samples");
+		configParam(SPD_PARAM, -4.f, 4.f, 1.f, "Speed", " samples");
 		configParam(SPD_MOD_PARAM, -1.f, 1.f, 0.f, "Speed modulation amount", "");
 		configParam(FBK_PARAM, 0.f, 1.f, 0.f, "Feedback", "", 0.f, 100.f, 0.f);
 		configParam(FBK_MOD_PARAM, -1.f, 1.f, 0.f, "Feedback modulation amount", "");
@@ -204,13 +204,31 @@ struct MuLooper : Module {
 	json_t* dataToJson() override {
 		json_t * rootJ = json_object();
 		json_object_set_new(rootJ, "scaleSpeed", json_boolean(scaleSpeed));
+
+		json_t * playBufferJ = json_array();
+		for (int i = 0; i < MAX_LENGTH; i++) {
+			json_array_append_new(playBufferJ, json_real(playBuffer[i]));
+		}
+
+		json_object_set_new(rootJ, "playBuffer", playBufferJ);
 		return rootJ;
 	}
 
 	void dataFromJson(json_t* rootJ) override {
 		json_t * scaleSpeedJ = json_object_get(rootJ, "scaleSpeed");
-		if (scaleSpeedJ)
+
+		if (scaleSpeedJ) {
 			scaleSpeed = json_boolean_value(scaleSpeedJ);
+		}
+
+		json_t * playBufferJ = json_object_get(rootJ, "playBuffer");
+		if (playBufferJ) {
+			size_t i;
+			json_t * a;
+			json_array_foreach(playBufferJ, i, a) {
+				playBuffer[i] = json_real_value(a);
+			}
+		}
 	}
 };
 

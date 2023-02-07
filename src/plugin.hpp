@@ -16,7 +16,6 @@ extern Model* modelChaosMaps;
 extern Model* modelMuLooper;
 extern Model* modelPluck;
 
-
 struct Inlet : app::SvgPort {
 	Inlet() {
 		setSvg(Svg::load(asset::plugin(pluginInstance, "res/components/Inlet.svg")));
@@ -77,13 +76,6 @@ struct FlatButtonStd : FlatButton {
 		momentary = true;
 		addFrame(Svg::load(asset::plugin(pluginInstance, "res/components/BtnStd_0.svg")));
 		addFrame(Svg::load(asset::plugin(pluginInstance, "res/components/BtnStd_1.svg")));
-	}
-};
-
-struct FlatButtonStdLatch : FlatButtonStd {
-	FlatButtonStdLatch() {
-		momentary = false;
-		latch = true;
 	}
 };
 

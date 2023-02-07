@@ -39,6 +39,7 @@ struct Pluck : Module {
 	KarplusStrong * kss[PORT_MAX_CHANNELS];
 	Exciter * exc = new Exciter();
 	dsp::SchmittTrigger trigger;
+	dsp::BooleanTrigger btnTrigger;
 
 	Pluck() {
 		config(PARAMS_LEN, INPUTS_LEN, OUTPUTS_LEN, LIGHTS_LEN);
@@ -74,10 +75,8 @@ struct Pluck : Module {
 	void process(const ProcessArgs& args) override {
 		bool triggered = trigger.process(inputs[PLUCK_INPUT].getVoltage(), 0.1f, 2.f);
 		triggered &= trigger.isHigh();
-		triggered |= params[PLUCK_PARAM].getValue() > 0.0;
-		if (triggered) {
-			params[PLUCK_PARAM].setValue(0.0);
-		}
+		bool btnTriggered = btnTrigger.process(params[PLUCK_PARAM].getValue() > 0.0);
+		triggered |= btnTriggered;
 
 		float damp = params[DAMP_PARAM].getValue();
 		if (inputs[DAMP_INPUT].isConnected()) {
@@ -89,7 +88,7 @@ struct Pluck : Module {
 		if (inputs[DECAY_INPUT].isConnected()) {
 			decay += params[DECAY_MOD_PARAM].getValue() * inputs[DECAY_INPUT].getVoltage();
 		}
-		decay = clamp(decay, 0.1, 100.0);
+		decay = clamp(decay, 0.1, 10.0);
 
 		float pluckAngle = params[ANGLE_PARAM].getValue();
 		if (inputs[ANGLE_INPUT].isConnected()) {
@@ -149,7 +148,7 @@ struct PluckWidget : ModuleWidget {
 		addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 		addChild(createWidget<ScrewBlack>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-		addParam(createParamCentered<FlatButtonStdLatch>(mm2px(Vec(13.0, 23.0)), module, Pluck::PLUCK_PARAM));
+		addParam(createParamCentered<FlatButtonStd>(mm2px(Vec(13.0, 23.0)), module, Pluck::PLUCK_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(33.0, 23.0)), module, Pluck::FREQ_PARAM));
 		addParam(createParamCentered<FlatKnobStd>(mm2px(Vec(13.0, 43.0)), module, Pluck::DAMP_PARAM));
 		addParam(createParamCentered<FlatSliderMod>(mm2px(Vec(6.0, 43.0)), module, Pluck::DAMP_MOD_PARAM));

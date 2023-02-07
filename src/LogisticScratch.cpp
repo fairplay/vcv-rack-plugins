@@ -71,18 +71,20 @@ struct LogisticScratch : Module {
 		if (inputs[L1_INPUT].isConnected()) {
 			float mod = params[L1_MOD_PARAM].getValue();
 			l1 += inputs[L1_INPUT].getVoltage() / 10.f * mod;
-			l1 = clamp(l1, 0.f, 1.f);
 		}
+		l1 = clamp(l1, 0.f, 1.f);
+
 		if (inputs[L2_INPUT].isConnected()) {
 			float mod = params[L2_MOD_PARAM].getValue();
 			l2 += inputs[L2_INPUT].getVoltage() / 10.f * mod;
-			l2 = clamp(l2, 0.f, 1.f);
 		}
+		l2 = clamp(l2, 0.f, 1.f);
+
 		if (inputs[DX_INPUT].isConnected()) {
 			float mod = params[DX_MOD_PARAM].getValue();
 			dx += inputs[DX_INPUT].getVoltage() / 10.f * mod;
-			dx = clamp(dx, 0.001f, 1.f);
 		}
+		dx = clamp(dx, 0.001f, 1.f);
 
 		l1 = l1 * 0.25f + 0.75f;
 		l2 = l2 * 0.25f + 0.75f;
