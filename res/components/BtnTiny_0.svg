@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="6mm"
-   height="6mm"
-   viewBox="0 0 6 6"
+   width="4mm"
+   height="4mm"
+   viewBox="0 0 4 4"
    version="1.1"
    id="svg827"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
-   sodipodi:docname="BtnStd_1_red.svg"
+   sodipodi:docname="BtnTiny_0.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -25,9 +25,9 @@
      showgrid="true"
      showborder="true"
      inkscape:showpageshadow="false"
-     inkscape:zoom="40.96"
-     inkscape:cx="14.648438"
-     inkscape:cy="11.328125"
+     inkscape:zoom="28.178125"
+     inkscape:cx="-3.4778751"
+     inkscape:cy="8.3398026"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -53,23 +53,11 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <g
-       id="g21139">
-      <ellipse
-         style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.0667039;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
-         id="path846"
-         cx="2.9999998"
-         cy="2.9906926"
-         rx="2.9652488"
-         ry="2.9590583" />
-      <ellipse
-         style="fill:#ed2c24;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
-         id="path920"
-         cx="-2.9999998"
-         cy="2.990694"
-         transform="scale(-1,1)"
-         ry="2.4383504"
-         rx="2.4435549" />
-    </g>
+    <circle
+       style="fill:#000000;fill-opacity:0;fill-rule:evenodd;stroke:#000000;stroke-width:0.249999;stroke-dasharray:none;stroke-opacity:1"
+       id="path1126"
+       cx="2"
+       cy="2"
+       r="1.1250006" />
   </g>
 </svg>

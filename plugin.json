@@ -14,12 +14,13 @@
   "changelogUrl": "",
   "modules": [
     {
-      "slug": "MicroLooper",
-      "name": "MicroLooper",
-      "description": "Recording sampler for the very short (16384 samples max) loops",
+      "slug": "muLooper",
+      "name": "muLooper",
+      "description": "Recording sampler for the very short (65536 samples max) loops",
       "tags": [
         "Sampler",
-        "Recording"
+        "Recording",
+        "Polyphonic"
       ]
     },
     {
@@ -33,19 +34,48 @@
       ]
     },
     {
-      "slug": "LFSR8",
-      "name": "LFSR8",
+      "slug": "LFSR8Poly",
+      "name": "LFSR8 Poly",
       "description": "Fully deterministic sequencer based on 8-bit LFSR capable to produce pseudo-random results",
+      "tags": [
+        "Sequencer",
+        "Polyphonic"
+      ]
+    },
+    {
+      "slug": "LFSR16Poly",
+      "name": "LFSR16 Poly",
+      "description": "16-bit LFSR sequencer with ability to split for two independent registers",
+      "tags": [
+        "Sequencer",
+        "Polyphonic"
+      ]
+    },
+    {
+      "slug": "Droplets",
+      "name": "Droplets",
+      "description": "Sequencer loosely based on the liquid flow in the leaky faucet",
+      "tags": [
+        "Sequencer",
+        "Polyphonic"
+      ]
+    },
+    {
+      "slug": "ChaosMaps",
+      "name": "ChaosMaps",
+      "description": "Sequencer based on the logistic and tent maps",
       "tags": [
         "Sequencer"
       ]
     },
     {
-      "slug": "LFSR16",
-      "name": "LFSR16",
-      "description": "16-bit LFSR sequencer with ability to split for two independent registers",
+      "slug": "Pluck",
+      "name": "Pluck",
+      "description": "Karplus-Strong plucked string implementation",
       "tags": [
-        "Sequencer"
+        "Oscillator",
+        "Physical modeling",
+        "Polyphonic"
       ]
     }
   ]

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="6mm"
+   height="6mm"
+   viewBox="0 0 6 6"
+   version="1.1"
+   id="svg827"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="PolyOutlet.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview829"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="true"
+     showborder="true"
+     inkscape:showpageshadow="false"
+     inkscape:zoom="37.570833"
+     inkscape:cx="11.338583"
+     inkscape:cy="11.338583"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:deskcolor="#d1d1d1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid888"
+       dotted="true"
+       units="mm"
+       spacingx="0.99999997"
+       spacingy="0.99999997"
+       visible="true"
+       enabled="true" />
+  </sodipodi:namedview>
+  <defs
+     id="defs824" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path920"
+       cx="2.9999998"
+       cy="2.9999998"
+       r="2.9499998" />
+    <circle
+       style="display:inline;fill:#000000;fill-opacity:1;stroke:#fbfbfb;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path1159"
+       cx="3"
+       cy="3"
+       r="1.9999995" />
+    <g
+       id="g9437">
+      <g
+         id="g9386">
+        <g
+           id="g9372">
+          <rect
+             style="fill:#000000;stroke:#000000;stroke-width:0"
+             id="rect6648"
+             width="0.099999003"
+             height="4.499999"
+             x="2.9735963"
+             y="0.75000048" />
+          <rect
+             style="fill:#000000;stroke:#000000;stroke-width:0"
+             id="rect9368"
+             width="0.099999003"
+             height="4.499999"
+             x="2.9500005"
+             y="-5.2735953"
+             transform="rotate(90)" />
+        </g>
+        <g
+           id="g9378"
+           transform="rotate(45,3.0235958,3)">
+          <rect
+             style="fill:#000000;stroke:#000000;stroke-width:0"
+             id="rect9374"
+             width="0.099999003"
+             height="4.499999"
+             x="2.9735963"
+             y="0.75000048" />
+          <rect
+             style="fill:#000000;stroke:#000000;stroke-width:0"
+             id="rect9376"
+             width="0.099999003"
+             height="4.499999"
+             x="2.9500005"
+             y="-5.2735953"
+             transform="rotate(90)" />
+        </g>
+      </g>
+      <g
+         id="g9400"
+         transform="rotate(22.5,3.0235958,3)">
+        <g
+           id="g9392">
+          <rect
+             style="fill:#000000;stroke:#000000;stroke-width:0"
+             id="rect9388"
+             width="0.099999003"
+             height="4.499999"
+             x="2.9735963"
+             y="0.75000048" />
+          <rect
+             style="fill:#000000;stroke:#000000;stroke-width:0"
+             id="rect9390"
+             width="0.099999003"
+             height="4.499999"
+             x="2.9500005"
+             y="-5.2735953"
+             transform="rotate(90)" />
+        </g>
+        <g
+           id="g9398"
+           transform="rotate(45,3.0235958,3)">
+          <rect
+             style="fill:#000000;stroke:#000000;stroke-width:0"
+             id="rect9394"
+             width="0.099999003"
+             height="4.499999"
+             x="2.9735963"
+             y="0.75000048" />
+          <rect
+             style="fill:#000000;stroke:#000000;stroke-width:0"
+             id="rect9396"
+             width="0.099999003"
+             height="4.499999"
+             x="2.9500005"
+             y="-5.2735953"
+             transform="rotate(90)" />
+        </g>
+      </g>
+    </g>
+    <g
+       id="g9467">
+      <g
+         id="g9451">
+        <g
+           id="g9443">
+          <rect
+             style="fill:#000000;stroke:#000000;stroke-width:0"
+             id="rect9439"
+             width="0.099999003"
+             height="4.499999"
+             x="2.9735963"
+             y="0.75000048" />
+          <rect
+             style="fill:#000000;stroke:#000000;stroke-width:0"
+             id="rect9441"
+             width="0.099999003"
+             height="4.499999"
+             x="2.9500005"
+             y="-5.2735953"
+             transform="rotate(90)" />
+        </g>
+        <g
+           id="g9449"
+           transform="rotate(45,3.0235958,3)">
+          <rect
+             style="fill:#000000;stroke:#000000;stroke-width:0"
+             id="rect9445"
+             width="0.099999003"
+             height="4.499999"
+             x="2.9735963"
+             y="0.75000048" />
+          <rect
+             style="fill:#000000;stroke:#000000;stroke-width:0"
+             id="rect9447"
+             width="0.099999003"
+             height="4.499999"
+             x="2.9500005"
+             y="-5.2735953"
+             transform="rotate(90)" />
+        </g>
+      </g>
+      <g
+         id="g9465"
+         transform="rotate(22.5,3.0235958,3)">
+        <g
+           id="g9457">
+          <rect
+             style="fill:#000000;stroke:#000000;stroke-width:0"
+             id="rect9453"
+             width="0.099999003"
+             height="4.499999"
+             x="2.9735963"
+             y="0.75000048" />
+          <rect
+             style="fill:#000000;stroke:#000000;stroke-width:0"
+             id="rect9455"
+             width="0.099999003"
+             height="4.499999"
+             x="2.9500005"
+             y="-5.2735953"
+             transform="rotate(90)" />
+        </g>
+        <g
+           id="g9463"
+           transform="rotate(45,3.0235958,3)">
+          <rect
+             style="fill:#000000;stroke:#000000;stroke-width:0"
+             id="rect9459"
+             width="0.099999003"
+             height="4.499999"
+             x="2.9735963"
+             y="0.75000048" />
+          <rect
+             style="fill:#000000;stroke:#000000;stroke-width:0"
+             id="rect9461"
+             width="0.099999003"
+             height="4.499999"
+             x="2.9500005"
+             y="-5.2735953"
+             transform="rotate(90)" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
