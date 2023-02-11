@@ -171,7 +171,7 @@ struct DropletsWidget : ModuleWidget {
 		addInput(createInputCentered<Inlet>(mm2px(Vec(6.0, 36.0)), module, Droplets::VISC_INPUT));
 		addInput(createInputCentered<Inlet>(mm2px(Vec(6.0, 76.0)), module, Droplets::TICK_INPUT));
 
-		addOutput(createOutputCentered<Outlet>(mm2px(Vec(25.0, 99.0)), module, Droplets::DROP_OUTPUT));
+		addOutput(createOutputCentered<PolyOutlet>(mm2px(Vec(25.0, 99.0)), module, Droplets::DROP_OUTPUT));
 		addOutput(createOutputCentered<PolyOutlet>(mm2px(Vec(25.0, 107.0)), module, Droplets::CV_OUTPUT));
 
 		addChild(createLightCentered<FlatLightSquareBig<BlackWhiteLight>>(mm2px(Vec(25.0, 20.0)), module, Droplets::L0_LIGHT));
