@@ -77,6 +77,34 @@
         "Physical modeling",
         "Polyphonic"
       ]
+    },
+    {
+      "slug": "MicroLooper",
+      "name": "MicroLooper",
+      "description": "Recording sampler for the very short (16384 samples max) loops. Replaced with muLooper",
+      "deprecated": true,
+      "tags": [
+        "Sampler",
+        "Recording"
+      ]
+    },
+    {
+      "slug": "LFSR8",
+      "name": "LFSR8",
+      "description": "Fully deterministic sequencer based on 8-bit LFSR capable to produce pseudo-random results. Replaced witg LFSR8Poly",
+      "deprecated": true,
+      "tags": [
+        "Sequencer"
+      ]
+    },
+    {
+      "slug": "LFSR16",
+      "name": "LFSR16",
+      "description": "16-bit LFSR sequencer with ability to split for two independent registers. Replaced witg LFSR16Poly",
+      "deprecated": true,
+      "tags": [
+        "Sequencer"
+      ]
     }
   ]
 }

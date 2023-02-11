@@ -1,6 +1,6 @@
 #pragma once
 #include <rack.hpp>
-
+#include "deprecated.hpp"
 
 using namespace rack;
 
