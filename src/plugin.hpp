@@ -158,12 +158,9 @@ template <class TModule>
 struct FlatDisplay : widget::Widget {
 	TModule * module;
 	std::vector<std::string> text = {};
-	std::shared_ptr<Font> font;
 	int fontSize = 9;
 
 	FlatDisplay() {
-		std::string fontPath = asset::plugin(pluginInstance, "res/fonts/MonoBold.ttf");
-		font = APP->window->loadFont(fontPath);
 	}
 
 	void step() override {
@@ -174,6 +171,9 @@ struct FlatDisplay : widget::Widget {
 	}
 
 	void draw(const DrawArgs& args) override {
+		std::string fontPath = asset::plugin(pluginInstance, "res/fonts/MonoBold.ttf");
+		std::shared_ptr<Font> font = APP->window->loadFont(fontPath);
+
 		if (!font) {
 			return;
 		}
